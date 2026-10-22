@@ -51,9 +51,9 @@ export function Hero() {
                   <span className={step.human ? "flow-dot flow-dot-human" : "flow-dot"} aria-hidden="true">
                     {step.n}
                   </span>
-                  <span>{step.text}</span>
+                  <span className="min-w-0 flex-1">{step.text}</span>
                   <span
-                    className={`flow-who ml-auto font-mono text-[11px] uppercase tracking-[0.06em] text-muted-dark ${step.human ? "flow-who-human" : ""}`}
+                    className={`flow-who ml-auto shrink-0 text-right font-mono text-[11px] uppercase leading-tight tracking-[0.06em] text-muted-dark ${step.human ? "flow-who-human" : ""}`}
                   >
                     {step.who}
                   </span>

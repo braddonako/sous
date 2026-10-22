@@ -1,7 +1,7 @@
 import { home } from "@/content/home";
 
 export function DevTeams() {
-  const { dev, how } = home;
+  const { dev } = home;
   return (
     <section id="dev" className="scroll-mt-6 py-16 desk:py-[104px]" aria-labelledby="dev-title">
       <div className="mx-auto w-full max-w-[1200px] px-5 desk:px-10">
@@ -50,73 +50,21 @@ export function DevTeams() {
             </li>
           ))}
         </ol>
+        <aside className="mt-8 flex items-start gap-4 rounded-[14px] border border-line bg-white px-5 py-5 desk:mt-10 desk:px-7 desk:py-6">
+          <span
+            aria-hidden="true"
+            className="grid h-9 w-9 shrink-0 place-items-center rounded-[10px] bg-accent-action text-[16px] font-bold text-white"
+          >
+            ✓
+          </span>
+          <div>
+            <h3 className="text-[22px] tracking-[-0.02em] desk:text-[26px]">{dev.chargeTitle}</h3>
+            <p className="mt-2 max-w-[760px] text-[15.5px] leading-relaxed text-muted desk:text-base">{dev.chargeBody}</p>
+          </div>
+        </aside>
         <p className="mt-[22px] flex items-start gap-2.5 text-[15.5px] text-muted before:mt-2 before:h-2 before:w-2 before:shrink-0 before:rounded-full before:bg-sage before:content-['']">
           {dev.note}
         </p>
-
-        <div id="how" className="mt-14 scroll-mt-6 rounded-3xl bg-ink px-5 py-[30px] text-white desk:mt-24 desk:rounded-[24px] desk:px-[52px] desk:pt-[52px] desk:pb-11">
-          <div className="mb-7 flex flex-col items-start gap-[18px] desk:mb-10 desk:flex-row desk:items-end desk:justify-between desk:gap-10">
-            <div>
-              <p className="eyebrow text-accent-on-dark">{how.eyebrow}</p>
-              <h3 className="mt-3 max-w-[620px] text-[28px] desk:text-[38px]">{how.title}</h3>
-            </div>
-            <ul className="flex list-none gap-5 text-sm text-muted-dark">
-              {how.legend.map((item) => (
-                <li key={item.label} className="flex items-center gap-2">
-                  <span
-                    aria-hidden="true"
-                    className={
-                      item.human
-                        ? "block h-3 w-3 rounded-[3px] bg-accent-action"
-                        : "block h-3 w-3 rounded-[3px] border border-[#4a5566] bg-[#2c3440]"
-                    }
-                  />
-                  {item.label}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <ol className="grid list-none gap-4 desk:grid-cols-6 desk:gap-0">
-            {how.steps.map((step) => (
-              <li key={step.n} className="flow-node desk:px-2.5">
-                <span className="absolute top-[-12px] left-[22px] hidden bg-ink px-1.5 font-mono text-[11px] text-muted-dark desk:inline">
-                  {step.n}
-                </span>
-                <div
-                  className={
-                    step.tone === "human"
-                      ? "h-full rounded-[14px] border border-[rgba(228,87,46,0.55)] bg-[rgba(228,87,46,0.1)] px-4 py-[18px]"
-                      : "h-full rounded-[14px] border border-line-dark bg-ink-2 px-4 py-[18px] desk:min-h-[150px]"
-                  }
-                >
-                  <p
-                    className={
-                      step.tone === "human"
-                        ? "font-mono text-[11px] uppercase tracking-[0.06em] text-[#f4a68c]"
-                        : step.tone === "input"
-                          ? "font-mono text-[11px] uppercase tracking-[0.06em] text-signal"
-                          : "font-mono text-[11px] uppercase tracking-[0.06em] text-[#9fb4d0]"
-                    }
-                  >
-                    {step.k}
-                  </p>
-                  <h4 className="mt-2.5 mb-1.5 text-lg font-semibold tracking-[-0.01em]">{step.title}</h4>
-                  <p className="text-[13.5px] leading-[1.45] text-muted-dark">{step.body}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-          <div className="mt-[34px] flex flex-col items-start gap-2.5 rounded-[14px] border border-line-dark bg-ink-2 px-[22px] py-[18px] desk:flex-row desk:items-center desk:gap-4">
-            <span
-              aria-hidden="true"
-              className="grid h-9 w-9 shrink-0 place-items-center rounded-[10px] bg-accent-action font-bold text-white"
-            >
-              ✓
-            </span>
-            <p className="font-display text-[19px] font-semibold">{how.chargeTitle}</p>
-            <p className="text-[15.5px] text-muted-dark">{how.chargeBody}</p>
-          </div>
-        </div>
       </div>
     </section>
   );

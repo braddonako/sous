@@ -4,13 +4,13 @@
  * A rename is an edit here: `brandName`, `brandGuard`, then `npm run check:brand`.
  */
 
-export const brandName = "The Chefs";
+export const brandName = "Sous";
 
 /**
  * Literals that must not appear under src/ outside this file.
  * Keep retired names in this list until they are gone from the repo.
  */
-export const brandGuard = ["The Chefs", "Chefs"] as const;
+export const brandGuard = ["Sous", "The Chefs", "Chefs"] as const;
 
 export type ThemeName = "neutral" | "kitchen";
 export type PlaceholderStatus = "TBC" | "confirmed";
@@ -32,7 +32,7 @@ export const site = {
   serviceAreaStatus: "confirmed" as PlaceholderStatus,
 
   /** Current GitHub Pages URL. Replace when a custom domain is chosen. */
-  url: "https://braddonako.github.io/the-chefs",
+  url: "https://braddonako.github.io/sous",
 
   /**
    * PLACEHOLDER — email TBC.

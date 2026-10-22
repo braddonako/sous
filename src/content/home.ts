@@ -32,7 +32,6 @@ export const home = {
   nav: [
     { label: "For dev teams", href: "#dev" },
     { label: "For businesses", href: "#smb" },
-    { label: "How it works", href: "#how" },
     { label: "About", href: "#about" },
   ],
   bookLabel: "Book a call",
@@ -53,7 +52,7 @@ export const home = {
       caption: "Illustrative flow",
       status: { neutral: "Shipped", kitchen: "Order up" },
       steps: [
-        { n: "1", text: "Picks up the ticket and the design", who: "Agent", human: false },
+        { n: "1", text: "Plans from the ticket and design", who: "Agent + your dev", human: true },
         { n: "2", text: "Does the build", who: "Agent", human: false },
         { n: "3", text: "Opens a pull request", who: "Agent", human: false },
         { n: "✓", text: "Reviews and signs off", who: "Your dev", human: true },
@@ -131,62 +130,10 @@ export const home = {
         core: false,
       },
     ],
-    note: "Every setup is built around your own codebase. Agents work on code, never on production data.",
-  },
-  how: {
-    eyebrow: "How it works",
-    title: "What happens when an agent picks up a ticket",
-    legend: [
-      { label: "Agent", human: false },
-      { label: "Your dev", human: true },
-    ],
-    steps: [
-      {
-        n: "01",
-        k: "Input",
-        title: "Ticket + design",
-        body: "The work starts from a ticket and a design.",
-        tone: "input",
-      },
-      {
-        n: "02",
-        k: "Agent",
-        title: "Plans",
-        body: "The agent drafts an approach. Your dev can change it.",
-        tone: "agent",
-      },
-      {
-        n: "03",
-        k: "Agent",
-        title: "Builds",
-        body: "The agent does the implementation.",
-        tone: "agent",
-      },
-      {
-        n: "04",
-        k: "Agent",
-        title: "Reviews",
-        body: "The work is checked before it reaches your team.",
-        tone: "agent",
-      },
-      {
-        n: "05",
-        k: "Output",
-        title: "Opens a PR",
-        body: "Traced back to the ticket, ready for review.",
-        tone: "agent",
-      },
-      {
-        n: "06",
-        k: "Your dev",
-        title: "Signs off",
-        body: "Reviews, asks for changes and approves the merge.",
-        tone: "human",
-      },
-    ],
     chargeTitle: "Devs stay in charge.",
     chargeBody:
-      "Agents do the legwork. Your team owns the architecture, every review and the final sign-off.",
+      "Your devs can steer at every step, from the plan to the merge. They own the architecture, every review and the final sign-off. We'll show you how it works on the call.",
+    note: "Every setup is built around your own codebase. Agents work on code, never on production data.",
   },
   smb: {
     eyebrow: "For small businesses",
@@ -338,10 +285,6 @@ export const home = {
       {
         q: "What does it cost?",
         a: "Every engagement is fixed in scope and scoped on a call, so you know what you're getting before anything starts.",
-      },
-      {
-        q: "You're two people. Is that a risk?",
-        a: "The first step is a free meeting. The first paid step stays small: one repo or one workflow, a few weeks, measured. You'll know whether it works before you commit to more.",
       },
     ],
   },

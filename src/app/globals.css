@@ -503,39 +503,6 @@ summary::-webkit-details-marker {
   background: transparent;
 }
 
-.flow-node {
-  position: relative;
-}
-
-@media (min-width: 701px) {
-  .flow-node:not(:last-child)::after {
-    content: "";
-    position: absolute;
-    z-index: 2;
-    top: 50%;
-    right: -5px;
-    width: 10px;
-    height: 10px;
-    border-top: 2px solid #8b939e;
-    border-right: 2px solid #8b939e;
-    transform: translateY(-50%) rotate(45deg);
-  }
-}
-
-@media (max-width: 700px) {
-  .flow-node:not(:last-child)::after {
-    content: "";
-    position: absolute;
-    bottom: -14px;
-    left: 50%;
-    width: 10px;
-    height: 10px;
-    border-top: 2px solid #8b939e;
-    border-right: 2px solid #8b939e;
-    transform: translateX(-50%) rotate(135deg);
-  }
-}
-
 .concept-screen {
   display: flex;
   height: 200px;

@@ -1,6 +1,6 @@
 # Studio site
 
-Marketing site for a two-person software studio. Next.js App Router, React, TypeScript, and Tailwind CSS. The production build is a static export served on GitHub Pages at `/the-chefs`.
+Marketing site for Sous, a two-person software studio. Next.js App Router, React, TypeScript, and Tailwind CSS. The production build is a static export served on GitHub Pages at `/sous`.
 
 ## Prerequisites
 
@@ -14,7 +14,7 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000/the-chefs](http://localhost:3000/the-chefs). The dev server uses the same `basePath` as GitHub Pages.
+Open [http://localhost:3000/sous](http://localhost:3000/sous). The dev server uses the same `basePath` as GitHub Pages.
 
 ## Scripts
 
@@ -43,4 +43,4 @@ Booking buttons never use `href="#"`. With no booking URL and no email, they use
 
 ## Deployment
 
-Pushes to `main` deploy through `.github/workflows/nextjs.yml`. Do not push to `main` to preview. Open a pull request. `actions/configure-pages` injects `basePath` for the Pages site. Local and pull-request builds set the same path in `next.config.ts`. Override it with `BASE_PATH` (use an empty string for a custom domain at the root).
+Pushes to `main` deploy through `.github/workflows/nextjs.yml`. Do not push to `main` to preview. Open a pull request. The Pages path is `/sous`, set in `next.config.ts` (routes and `/_next` assets). The workflow does not inject a different path. Override it with `BASE_PATH` (use an empty string for a custom domain at the root).
