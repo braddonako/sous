@@ -1,85 +1,68 @@
 "use client";
 
-import { useState } from "react";
-import { siteConfig } from "@/config/menu";
-
-const navLinks = [
-  { label: "Menu", href: "#menu" },
-  { label: "Projects", href: "#projects" },
-  { label: "Team", href: "#team" },
-  { label: "Contact", href: "#contact" },
-];
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import BookCall from "./BookCall";
+import Wordmark from "./Wordmark";
+import { home } from "@/content/home";
 
 export default function Navbar() {
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open]);
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-border-light bg-bg-secondary/90 backdrop-blur-md">
-      <div className="mx-auto flex max-w-[var(--content-max-width)] items-center justify-between px-6 py-0">
-        <a href="#" className="flex items-center gap-2">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="./logo.png" alt={siteConfig.name} className="h-24 md:h-32" />
-        </a>
+    <header className="site-header">
+      <div className="shell header-bar">
+        <Link href="/" className="wordmark-link">
+          <Wordmark />
+        </Link>
 
-        {/* Desktop nav */}
-        <div className="hidden items-center gap-8 md:flex">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-sm font-medium text-text-secondary transition-colors hover:text-brand-primary"
-            >
+        <nav className="nav-desktop" aria-label="Primary">
+          {home.nav.map((link) => (
+            <a key={link.href} href={link.href} className="nav-link">
               {link.label}
             </a>
           ))}
-          <a
-            href="#contact"
-            className="rounded-full bg-brand-primary px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-primary-hover"
-          >
-            Let&apos;s Cook
-          </a>
-        </div>
+          <BookCall />
+        </nav>
 
-        {/* Mobile hamburger */}
         <button
-          className="flex flex-col gap-1.5 md:hidden"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
+          type="button"
+          className="nav-toggle"
+          aria-expanded={open}
+          aria-controls="mobile-nav"
+          onClick={() => setOpen((value) => !value)}
         >
-          <span
-            className={`h-0.5 w-6 bg-text-primary transition-transform ${mobileOpen ? "translate-y-2 rotate-45" : ""}`}
-          />
-          <span
-            className={`h-0.5 w-6 bg-text-primary transition-opacity ${mobileOpen ? "opacity-0" : ""}`}
-          />
-          <span
-            className={`h-0.5 w-6 bg-text-primary transition-transform ${mobileOpen ? "-translate-y-2 -rotate-45" : ""}`}
-          />
+          <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
+          <span className={`nav-toggle-bars ${open ? "is-open" : ""}`} aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </span>
         </button>
       </div>
 
-      {/* Mobile menu */}
-      {mobileOpen && (
-        <div className="border-t border-border-light bg-bg-secondary px-6 py-4 md:hidden">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="block py-3 text-sm font-medium text-text-secondary transition-colors hover:text-brand-primary"
-              onClick={() => setMobileOpen(false)}
-            >
-              {link.label}
-            </a>
-          ))}
+      <nav id="mobile-nav" className="nav-mobile" aria-label="Primary" hidden={!open}>
+        {home.nav.map((link) => (
           <a
-            href="#contact"
-            className="mt-2 block rounded-full bg-brand-primary px-5 py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-brand-primary-hover"
-            onClick={() => setMobileOpen(false)}
+            key={link.href}
+            href={link.href}
+            className="nav-link"
+            onClick={() => setOpen(false)}
           >
-            Let&apos;s Cook
+            {link.label}
           </a>
-        </div>
-      )}
-    </nav>
+        ))}
+        <BookCall />
+      </nav>
+    </header>
   );
 }

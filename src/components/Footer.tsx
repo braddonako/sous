@@ -1,16 +1,35 @@
-import { siteConfig } from "@/config/menu";
+import { brand } from "@/config/site";
+import { home } from "@/content/home";
 
 export default function Footer() {
+  const year = new Date().getFullYear();
+  const email = brand.email.trim();
+  const linkedin = brand.linkedin.trim();
+  const showEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const showLinkedin = /^https?:\/\//i.test(linkedin);
+
   return (
-    <footer className="border-t border-white/10 bg-bg-dark-secondary px-6 py-8">
-      <div className="mx-auto flex max-w-[var(--content-max-width)] flex-col items-center justify-between gap-4 text-sm text-text-on-dark-muted sm:flex-row">
+    <footer className="site-footer">
+      <div className="shell footer-bar">
         <p>
-          &copy; {new Date().getFullYear()} {siteConfig.name}. All rights
-          reserved.
+          © {year} {brand.name}. {home.footer.rights}
         </p>
-        <p className="font-medium text-text-on-dark">
-          {siteConfig.slogan}
-        </p>
+        <p>{brand.location}</p>
+        <ul className="footer-links">
+          {showEmail ? (
+            <li>
+              <a href={`mailto:${email}`}>{email}</a>
+            </li>
+          ) : null}
+          {showLinkedin ? (
+            <li>
+              <a href={linkedin} rel="noopener noreferrer" target="_blank">
+                {home.footer.linkedinLabel}
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </li>
+          ) : null}
+        </ul>
       </div>
     </footer>
   );

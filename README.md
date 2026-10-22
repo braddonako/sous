@@ -1,73 +1,45 @@
-# The Chefs
+# Landing page
 
-Marketing website for **The Chefs** — a software development studio. Built with Next.js, TypeScript, and Tailwind CSS.
+Static marketing site for a two-person consultancy. Built with Next.js (static export), TypeScript, and Tailwind CSS. GitHub Pages deploys it from `.github/workflows/nextjs.yml` on every push to `main`. A pull request does not go live until it is merged.
 
-## Prerequisites
+## Edit the name in one place
 
-- [Node.js](https://nodejs.org/) v18+
-- npm (comes with Node)
+Company name, tagline, email, booking link, location, and the wordmark live in [`src/config/site.ts`](src/config/site.ts). Page copy lives in [`src/content/home.ts`](src/content/home.ts).
 
-## Setup
+The header uses a text wordmark, so a rename does not require a new logo image. `npm run check:brand` fails if the configured name, domain, or email is hardcoded anywhere else under `src/`. The Pages workflow runs that check before `next build`.
 
 ```bash
-# Install dependencies
-npm install
-
-# Start the dev server
-npm run dev
+npm run check:brand
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the site.
+## Theme
+
+`theme` in `src/config/site.ts` is `"neutral"` or `"kitchen"`. Neutral is the default. Kitchen turns on warmer accents, serif headings, dotted offer rows, and a few menu labels. Leave it on neutral unless the name still suits that flavor.
+
+## Prices
+
+Prices are commented out in `src/content/home.ts`. Uncomment a step's `price` field to show it. Until then, the page says every engagement is scoped on a call.
+
+## Contact
+
+`bookingUrl` and `email` in the config are placeholders until they are confirmed. With no booking URL, "Book a call" opens email. With no email either, the button is a disabled coming-soon state. Neither state uses a dead `#` link.
 
 ## Scripts
 
 | Command | Description |
-|---------|-------------|
-| `npm run dev` | Start dev server with hot reload |
-| `npm run build` | Production build |
-| `npm run start` | Serve the production build |
-| `npm run lint` | Run ESLint |
+| --- | --- |
+| `npm run dev` | Dev server |
+| `npm run check:brand` | Fail if the brand name is hardcoded outside the config |
+| `npm run build` | Brand check, then static export to `out/` |
+| `npm run lint` | ESLint |
 
-## Project Structure
-
-```
-src/
-  config/
-    menu.ts          # All site content: services, pricing, copy
-  components/
-    Navbar.tsx        # Sticky nav with mobile hamburger
-    Hero.tsx          # Landing hero section
-    MenuSection.tsx   # Services displayed as restaurant menu
-    About.tsx         # Team / capabilities
-    Contact.tsx       # CTA section
-    Footer.tsx
-  app/
-    globals.css       # Theme variables (colors, shadows, spacing)
-    layout.tsx        # Root layout with fonts and metadata
-    page.tsx          # Home page composition
-```
-
-## Theming
-
-All brand colors are CSS custom properties in `src/app/globals.css`. To retheme the site, update these variables:
-
-```css
---brand-primary: #e85d26;      /* Buttons, accents */
---brand-secondary: #1a1a2e;    /* Dark backgrounds, logo text */
---brand-accent: #f0c040;       /* Highlights, labels */
-```
-
-## Editing Content
-
-All menu items, pricing, and site copy live in `src/config/menu.ts`. Update that file to change what appears on the site — no need to touch components.
-
-## Deployment
-
-Build and deploy anywhere that supports Node.js, or export as static:
+## Local setup
 
 ```bash
-npm run build
-npm run start     # serves on port 3000
+npm install
+npm run dev
 ```
 
-Works out of the box on Vercel, Netlify, or any static host.
+Open [http://localhost:3000](http://localhost:3000).
+
+Pages builds with a `/the-chefs` base path injected by `actions/configure-pages`. Asset links go through Next, so they keep that prefix. Hash links on the page stay relative.

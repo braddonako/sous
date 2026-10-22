@@ -1,33 +1,31 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
+import { brand, theme } from "@/config/site";
+import { home } from "@/content/home";
 import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-});
-
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "The Chefs | Let Us Cook",
-  description:
-    "Custom software development by senior engineers. Web apps, mobile apps, AI workflows, and cloud — built right, no templates.",
-  keywords: [
-    "software development",
-    "web development",
-    "mobile apps",
-    "AI workflows",
-    "custom software",
-  ],
+  title: home.meta.title,
+  description: home.meta.description,
+  openGraph: {
+    title: home.meta.title,
+    description: home.meta.description,
+    type: "website",
+    locale: "en_US",
+    siteName: brand.name,
+  },
 };
 
 export default function RootLayout({
@@ -38,9 +36,15 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} h-full antialiased`}
+      data-theme={theme}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">
+        <a className="skip-link" href="#main">
+          Skip to content
+        </a>
+        {children}
+      </body>
     </html>
   );
 }
