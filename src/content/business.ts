@@ -17,7 +17,7 @@ export const business = {
     },
     titleLead: "Get hours back",
     titleRest: "from the work that eats your week.",
-    lede: "You don't need to understand AI to benefit from it. Tell us what slows your team down. We'll tell you honestly if it's worth fixing, and if it isn't, we'll say so.",
+    lede: "You don't need to understand AI to benefit from it. Tell us what slows your team down, and we'll tell you whether it's worth fixing.",
     note: "Free meeting. 20 minutes. No pitch deck.",
   },
   offer: {
