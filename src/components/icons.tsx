@@ -138,12 +138,12 @@ export const PullRequestIcon = (props: IconProps) => (
   <Base {...props}><circle cx="6" cy="6" r="2.25" /><circle cx="6" cy="18" r="2.25" /><path d="M6 8.25v7.5" /><path d="M18 15.75V10a3 3 0 0 0-3-3h-4.5" /><path d="M12.75 4.75L10.5 7l2.25 2.25" /><circle className="accent" cx="18" cy="18" r="2.4" style={{ fill: ACCENT }} stroke="none" /></Base>
 );
 
-/** Path card "I run a dev team", For dev teams section */
+/** Path card "Ship software faster", For dev teams section */
 export const TerminalIcon = (props: IconProps) => (
   <Base {...props}><rect x="3" y="4.5" width="18" height="15" rx="3" /><path d="M7.5 9.75l2.75 2.5-2.75 2.5" /><path className="accent" d="M12.75 14.75h4" style={{ stroke: ACCENT }} /></Base>
 );
 
-/** Path card "I run a business", For small businesses section */
+/** Path card "Take busywork off my plate", For small businesses section */
 export const StorefrontIcon = (props: IconProps) => (
   <Base {...props}><path d="M4 9.5L5.5 4.5h13L20 9.5" /><path d="M4 9.5a2.67 2.67 0 0 0 5.33 0a2.67 2.67 0 0 0 5.34 0a2.67 2.67 0 0 0 5.33 0" /><path d="M5.5 12.5v7.5h13v-7.5" /><circle className="accent" cx="12" cy="16.25" r="1.75" style={{ fill: ACCENT }} stroke="none" /></Base>
 );

@@ -45,14 +45,14 @@ export const home = {
     dev: {
       href: "/teams",
       kicker: "For CTOs & eng leads",
-      title: "I run a dev team",
+      title: "Ship software faster",
       body: "Get more out of the team you have. Agents take tickets and designs to reviewed PRs, tuned to your codebase.",
       chips: ["Audit", "Infrastructure setup", "Workflow redesign", "Retainer"],
     },
     business: {
       href: "/business",
       kicker: "For owners & operators",
-      title: "I run a business",
+      title: "Take busywork off my plate",
       body: "Get hours back from the busywork. We show you where AI actually helps and build small tools that fit how you already work.",
       chips: ["Understand & use AI", "Automate busywork", "Custom software"],
     },
@@ -87,7 +87,7 @@ export const home = {
   },
   footer: {
     rights: "© {year} {brand} · {location}",
-    teams: "Teams",
-    business: "Business",
+    teams: "Software teams",
+    business: "Automation",
   },
 } as const;
