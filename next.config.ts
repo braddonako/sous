@@ -1,13 +1,16 @@
 import type { NextConfig } from "next";
 
 /**
- * GitHub Pages serves this repo at /the-chefs.
- * actions/configure-pages only rewrites next.config.js/.mjs/.cjs, so on a
- * Pages build it may write a sibling next.config.js (loaded first) with the
- * same basePath. Keep this value in sync for local and pull-request builds.
- * Set BASE_PATH="" when a custom domain serves the site from the root.
+ * GitHub Pages serves this site at /sous
+ * (https://braddonako.github.io/sous/).
+ * basePath prefixes routes and /_next assets. Do not also set assetPrefix:
+ * that option is for a separate CDN host, and pairing it with basePath
+ * would double-prefix the files.
+ * The Pages workflow does not inject a path, so this value is what the
+ * export uses. Set BASE_PATH="" when a custom domain serves the site
+ * from the root.
  */
-const basePath = process.env.BASE_PATH !== undefined ? process.env.BASE_PATH : "/the-chefs";
+const basePath = process.env.BASE_PATH !== undefined ? process.env.BASE_PATH : "/sous";
 
 const nextConfig: NextConfig = {
   output: "export",

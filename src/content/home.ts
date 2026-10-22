@@ -3,8 +3,8 @@
  * src/config/site.ts. Tokens: {brand} {location} {serviceArea} {year}.
  *
  * Prices are not rendered. The Strategy doc proposes them and the Company
- * Overview still lists pricing as an open question, so the page says
- * "Scoped on a call".
+ * Overview still lists pricing as an open question. The page does not price
+ * anything on the call. After the call, the studio sends a plan and pricing.
  *
  * Dev teams (Strategy doc, not validated):
  *   Readiness audit — $3,500 (2 weeks, credited to setup within 30 days)
@@ -32,7 +32,6 @@ export const home = {
   nav: [
     { label: "For dev teams", href: "#dev" },
     { label: "For businesses", href: "#smb" },
-    { label: "How it works", href: "#how" },
     { label: "About", href: "#about" },
   ],
   bookLabel: "Book a call",
@@ -53,7 +52,7 @@ export const home = {
       caption: "Illustrative flow",
       status: { neutral: "Shipped", kitchen: "Order up" },
       steps: [
-        { n: "1", text: "Picks up the ticket and the design", who: "Agent", human: false },
+        { n: "1", text: "Plans from the ticket and design", who: "Agent + your dev", human: true },
         { n: "2", text: "Does the build", who: "Agent", human: false },
         { n: "3", text: "Opens a pull request", who: "Agent", human: false },
         { n: "✓", text: "Reviews and signs off", who: "Your dev", human: true },
@@ -99,27 +98,25 @@ export const home = {
     eyebrow: "For dev teams",
     title: "Start small. Measure it. Then go further.",
     lede: "It starts with a free meeting. Each step after that is fixed in scope and built around your codebase. You'll know whether it works before you commit to the next one.",
-    scope: "Scoped on a call",
+    priceLine:
+      "After the call, we'll send you a plan and pricing built around your team and codebase.",
     rungs: [
       {
         n: "01",
         title: "Readiness audit",
         body: "We review one repo, your conventions and how your team uses AI today. You get a gap report, a plan and a baseline metric we pick together.",
-        aside: "After we meet",
         core: false,
       },
       {
         n: "02",
         title: "agents.md setup",
         body: "A setup built around your architecture and tuned on real tickets, so the code reads like your team wrote it.",
-        aside: "Before / after",
         core: false,
       },
       {
         n: "03",
         title: "Workflow redesign",
         body: "Devs own features end to end. Agents take tickets and designs through to review, and your team gets trained.",
-        aside: "After setup",
         core: true,
         badge: "Core",
       },
@@ -127,66 +124,13 @@ export const home = {
         n: "04",
         title: "Ongoing support",
         body: "A retainer that keeps the setup tuned as your codebase changes, onboards new repos and gives your team someone to ask.",
-        aside: "Monthly",
         core: false,
-      },
-    ],
-    note: "Every setup is built around your own codebase. Agents work on code, never on production data.",
-  },
-  how: {
-    eyebrow: "How it works",
-    title: "What happens when an agent picks up a ticket",
-    legend: [
-      { label: "Agent", human: false },
-      { label: "Your dev", human: true },
-    ],
-    steps: [
-      {
-        n: "01",
-        k: "Input",
-        title: "Ticket + design",
-        body: "The work starts from a ticket and a design.",
-        tone: "input",
-      },
-      {
-        n: "02",
-        k: "Agent",
-        title: "Plans",
-        body: "The agent drafts an approach. Your dev can change it.",
-        tone: "agent",
-      },
-      {
-        n: "03",
-        k: "Agent",
-        title: "Builds",
-        body: "The agent does the implementation.",
-        tone: "agent",
-      },
-      {
-        n: "04",
-        k: "Agent",
-        title: "Reviews",
-        body: "The work is checked before it reaches your team.",
-        tone: "agent",
-      },
-      {
-        n: "05",
-        k: "Output",
-        title: "Opens a PR",
-        body: "Traced back to the ticket, ready for review.",
-        tone: "agent",
-      },
-      {
-        n: "06",
-        k: "Your dev",
-        title: "Signs off",
-        body: "Reviews, asks for changes and approves the merge.",
-        tone: "human",
       },
     ],
     chargeTitle: "Devs stay in charge.",
     chargeBody:
-      "Agents do the legwork. Your team owns the architecture, every review and the final sign-off.",
+      "Your devs can steer at every step, from the plan to the merge. They own the architecture, every review and the final sign-off. We'll show you how it works on the call.",
+    note: "Every setup is built around your own codebase. Agents work on code, never on production data.",
   },
   smb: {
     eyebrow: "For small businesses",
@@ -267,7 +211,7 @@ export const home = {
       },
       {
         title: "We fix one thing first",
-        body: "A small, fixed-scope project on one workflow, built on your existing tools and process. Scoped on a call.",
+        body: "A small, fixed-scope project on one workflow, built on your existing tools and process. After the call, we'll send a plan and pricing.",
       },
       {
         title: "Keep it running, then grow",
@@ -337,11 +281,7 @@ export const home = {
       },
       {
         q: "What does it cost?",
-        a: "Every engagement is fixed in scope and scoped on a call, so you know what you're getting before anything starts.",
-      },
-      {
-        q: "You're two people. Is that a risk?",
-        a: "The first step is a free meeting. The first paid step stays small: one repo or one workflow, a few weeks, measured. You'll know whether it works before you commit to more.",
+        a: "Every engagement is fixed in scope. After the call, we'll send a plan and pricing, so you know what you're getting before anything starts.",
       },
     ],
   },

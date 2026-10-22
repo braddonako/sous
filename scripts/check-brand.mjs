@@ -31,6 +31,21 @@ if (!guardLiterals.some((literal) => literal.toLowerCase() === brandName.toLower
   process.exit(1);
 }
 
+/**
+ * Retired names stay banned even if they are dropped from brandGuard.
+ * "The Chefs" and the short form "Chefs" must not be hardcoded under src/.
+ */
+const retiredBrandLiterals = ["The Chefs", "Chefs"];
+
+for (const retired of retiredBrandLiterals) {
+  if (!guardLiterals.some((literal) => literal.toLowerCase() === retired.toLowerCase())) {
+    console.error(
+      `brandGuard must include retired brand "${retired}" so a hardcoded use fails the build.`,
+    );
+    process.exit(1);
+  }
+}
+
 function readProp(prop) {
   const match = config.match(new RegExp(`\\b${prop}:\\s*"([^"]*)"`));
   return match ? match[1] : null;
@@ -47,7 +62,9 @@ if (!bookingFallback || bookingFallback === "#" || !bookingFallback.startsWith("
   process.exit(1);
 }
 
-const needles = [...new Set([brandName, ...guardLiterals])].filter((value) => value.trim().length >= 2);
+const needles = [...new Set([brandName, ...guardLiterals, ...retiredBrandLiterals])].filter(
+  (value) => value.trim().length >= 2,
+);
 
 const proofBanned = [
   "800K",
@@ -115,7 +132,7 @@ for (const file of files) {
     const price = text.match(/\$\s?\d/);
     if (price) {
       failures.push(
-        `${relative}:${lineOf(text, price.index)} prices stay commented in src/content/home.ts. The page says "Scoped on a call".`,
+        `${relative}:${lineOf(text, price.index)} prices stay commented in src/content/home.ts. The page does not list prices or price anything on the call.`,
       );
     }
   }
@@ -128,5 +145,5 @@ if (failures.length > 0) {
 }
 
 console.log(
-  `Brand check passed. "${brandName}" is confined to src/config, booking links are not "#", and day-job proof is absent.`,
+  `Brand check passed. "${brandName}" is confined to src/config, retired name "The Chefs" is blocked outside config, booking links are not "#", and day-job proof is absent.`,
 );
