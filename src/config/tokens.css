@@ -51,6 +51,8 @@
   --muted: var(--sous-muted);
   --muted-dark: var(--sous-muted-dark);
   --orange: var(--sous-orange-500);
+  /* Accent dots and fills inside icons. Mono icons set this to currentColor. */
+  --icon-accent: var(--sous-orange);
   --orange-50: var(--sous-orange-50);
   --orange-200: var(--sous-orange-200);
   --orange-600: var(--sous-orange-600);

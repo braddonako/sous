@@ -3,6 +3,7 @@ import { pickTheme } from "@/config/site";
 import { home } from "@/content/home";
 import { fill } from "@/lib/fill";
 import { BookCall } from "@/components/BookCall";
+import { ArrowRightIcon, StorefrontIcon, TerminalIcon } from "@/components/icons";
 
 export function HomeHero() {
   const { hero, paths } = home;
@@ -45,11 +46,18 @@ function PathCard({
       aria-labelledby={titleId}
       aria-describedby={bodyId}
     >
-      <p className="font-mono text-[12.5px] uppercase tracking-[0.08em] text-muted">{path.kicker}</p>
+      <p className="flex items-center gap-2.5 font-mono text-[12.5px] uppercase tracking-[0.08em] text-muted">
+        {business ? (
+          <StorefrontIcon size={26} className="text-sage-deep" />
+        ) : (
+          <TerminalIcon size={26} className="text-ink" />
+        )}
+        {path.kicker}
+      </p>
       <h2 id={titleId} className="mt-1.5 mb-2 flex items-center justify-between gap-4 text-[26px] desk:text-[30px]">
         {path.title}
         <span className={business ? "path-go path-go-biz" : "path-go"} aria-hidden="true">
-          →
+          <ArrowRightIcon size={20} />
         </span>
       </h2>
       <p id={bodyId} className="max-w-[520px] text-base text-muted">

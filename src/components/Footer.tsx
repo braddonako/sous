@@ -2,6 +2,7 @@ import Link from "next/link";
 import { isHttpUrl, isRealEmail, site } from "@/config/site";
 import { home } from "@/content/home";
 import { fill } from "@/lib/fill";
+import { ArrowUpRightIcon, LinkedinIcon, MailIcon } from "@/components/icons";
 import { Wordmark } from "@/components/Wordmark";
 
 export function Footer() {
@@ -26,13 +27,20 @@ export function Footer() {
         {showEmail || showLinkedin ? (
           <p className="flex gap-4">
             {showEmail ? (
-              <a href={`mailto:${email}`} className="underline underline-offset-[3px]">
+              <a href={`mailto:${email}`} className="inline-flex items-center gap-1.5 underline underline-offset-[3px]">
+                <MailIcon size={16} />
                 {email}
               </a>
             ) : null}
             {showLinkedin ? (
-              <a href={linkedin} className="underline underline-offset-[3px]" rel="noopener noreferrer">
+              <a
+                href={linkedin}
+                className="inline-flex items-center gap-1.5 underline underline-offset-[3px]"
+                rel="noopener noreferrer"
+              >
+                <LinkedinIcon size={16} />
                 LinkedIn
+                <ArrowUpRightIcon size={14} />
               </a>
             ) : null}
           </p>

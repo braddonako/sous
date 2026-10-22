@@ -1,4 +1,12 @@
 import { teams } from "@/content/teams";
+import { ClockIcon, GaugeIcon, TallyIcon } from "@/components/icons";
+
+function MeasureMark({ kind }: { kind: string }) {
+  if (kind === "Time") return <ClockIcon size={16} />;
+  if (kind === "Count") return <TallyIcon size={16} />;
+  if (kind === "Quality") return <GaugeIcon size={16} />;
+  return null;
+}
 
 export function Proof() {
   const { proof } = teams;
@@ -52,7 +60,8 @@ export function Proof() {
                   className="flex items-center justify-between gap-3 border-t border-line-dark py-[11px] text-[15px]"
                 >
                   {item.label}
-                  <span className="font-mono text-[11px] tracking-[0.05em] whitespace-nowrap text-muted-dark uppercase">
+                  <span className="inline-flex items-center gap-1.5 font-mono text-[11px] tracking-[0.05em] whitespace-nowrap text-muted-dark uppercase">
+                    <MeasureMark kind={item.kind} />
                     {item.kind}
                   </span>
                 </li>

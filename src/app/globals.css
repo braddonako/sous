@@ -563,3 +563,43 @@ summary::-webkit-details-marker {
 .theme-kitchen .mark-quiet {
   opacity: 0.25;
 }
+
+.icon {
+  display: block;
+  flex: none;
+}
+
+.flow-mark {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  flex: none;
+  place-items: center;
+}
+
+.faq-item .faq-minus {
+  display: none;
+}
+
+.faq-item[open] .faq-plus {
+  display: none;
+}
+
+.faq-item[open] .faq-minus {
+  display: block;
+}
+
+.nav-disclosure .nav-close-icon,
+.nav-disclosure .nav-close-label {
+  display: none;
+}
+
+.nav-disclosure[open] .nav-menu-icon,
+.nav-disclosure[open] .nav-menu-label {
+  display: none;
+}
+
+.nav-disclosure[open] .nav-close-icon,
+.nav-disclosure[open] .nav-close-label {
+  display: block;
+}

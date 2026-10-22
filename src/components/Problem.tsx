@@ -1,4 +1,5 @@
 import { teams } from "@/content/teams";
+import { ArrowRightIcon, WaitingIcon } from "@/components/icons";
 
 export function Problem() {
   const { problem } = teams;
@@ -21,17 +22,18 @@ export function Problem() {
             {problem.chain.map((step, index) => (
               <li key={`${step.label}-${index}`} className="flex items-center gap-1.5 desk:gap-2">
                 {index > 0 ? (
-                  <span aria-hidden="true" className="font-normal text-[var(--arrow)]">
-                    →
+                  <span aria-hidden="true" className="inline-flex text-[var(--arrow)]">
+                    <ArrowRightIcon size={15} />
                   </span>
                 ) : null}
                 <span
                   className={
                     step.wait
-                      ? "rounded-[10px] bg-accent-soft px-2.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.05em] text-[var(--wait)]"
+                      ? "inline-flex items-center gap-1.5 rounded-[10px] bg-accent-soft px-2.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.05em] text-[var(--wait)]"
                       : "rounded-[10px] border border-line bg-white px-2.5 py-[7px] text-[13.5px] font-medium desk:px-[13px] desk:py-[9px] desk:text-[14.5px]"
                   }
                 >
+                  {step.label === "waiting" ? <WaitingIcon size={15} className="text-ink" /> : null}
                   {step.label}
                 </span>
               </li>
@@ -44,8 +46,8 @@ export function Problem() {
             {problem.after.map((step, index) => (
               <span key={step} className="flex items-center gap-1.5 desk:gap-2">
                 {index > 0 ? (
-                  <span aria-hidden="true" className="text-[var(--arrow)]">
-                    →
+                  <span aria-hidden="true" className="inline-flex text-[var(--arrow)]">
+                    <ArrowRightIcon size={15} />
                   </span>
                 ) : null}
                 <span

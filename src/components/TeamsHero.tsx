@@ -2,6 +2,31 @@ import { pickTheme, site } from "@/config/site";
 import { teams } from "@/content/teams";
 import { fill } from "@/lib/fill";
 import { BookCall } from "@/components/BookCall";
+import { AgentIcon, ArrowRightIcon, PairIcon, PullRequestIcon, SignOffIcon, TicketIcon } from "@/components/icons";
+
+type FlowStep = (typeof teams.hero.flow.steps)[number];
+
+function flowMark(step: FlowStep) {
+  if (step.n === "✓") return SignOffIcon;
+  if (step.who.includes("+")) return PairIcon;
+  if (step.text.toLowerCase().includes("pull request")) return PullRequestIcon;
+  return AgentIcon;
+}
+
+function FlowLabel({ text }: { text: string }) {
+  const parts = text.split("→");
+  if (parts.length < 2) return text;
+  return (
+    <span className="inline-flex items-center gap-1.5">
+      {parts.map((part, index) => (
+        <span key={`${part}-${index}`} className="inline-flex items-center gap-1.5">
+          {index > 0 ? <ArrowRightIcon size={14} /> : null}
+          {part.trim()}
+        </span>
+      ))}
+    </span>
+  );
+}
 
 export function TeamsHero() {
   const { hero } = teams;
@@ -36,7 +61,10 @@ export function TeamsHero() {
 
           <figure className="flowcard" aria-label="Illustrative example, not a real client ticket">
             <div className="flow-kicker mb-4 flex items-center justify-between font-mono text-[12.5px] uppercase tracking-[0.08em] text-muted-dark">
-              <span>{pickTheme(hero.flow.title)}</span>
+              <span className="inline-flex items-center gap-2">
+                <TicketIcon size={18} />
+                <FlowLabel text={pickTheme(hero.flow.title)} />
+              </span>
               <span>{hero.flow.example}</span>
             </div>
             <div className="flow-ticket mb-3.5 rounded-xl bg-ink-3 px-[18px] py-4">
@@ -46,10 +74,12 @@ export function TeamsHero() {
               </p>
             </div>
             <ol className="flex flex-col gap-2">
-              {hero.flow.steps.map((step) => (
+              {hero.flow.steps.map((step) => {
+                const Mark = flowMark(step);
+                return (
                 <li key={step.text} className={step.human ? "flow-step flow-step-human" : "flow-step"}>
-                  <span className={step.human ? "flow-dot flow-dot-human" : "flow-dot"} aria-hidden="true">
-                    {step.n}
+                  <span className="flow-mark" aria-hidden="true">
+                    <Mark size={24} />
                   </span>
                   <span className="min-w-0 flex-1">{step.text}</span>
                   <span
@@ -58,7 +88,8 @@ export function TeamsHero() {
                     {step.who}
                   </span>
                 </li>
-              ))}
+                );
+              })}
             </ol>
             <figcaption className="flow-foot mt-3.5 flex justify-between font-mono text-[12.5px] uppercase tracking-[0.08em] text-muted-dark">
               <span>{hero.flow.caption}</span>
