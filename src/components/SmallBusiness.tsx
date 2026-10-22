@@ -65,12 +65,7 @@ export function SmallBusiness() {
 
         <div className="mt-11 grid gap-5 desk:mt-16 desk:grid-cols-[0.95fr_1.05fr]">
           <div className="flex flex-col rounded-[20px] bg-sage-deep px-[22px] py-[26px] text-white desk:px-9 desk:pt-9 desk:pb-8">
-            <div className="flex flex-wrap items-center gap-3">
-              <p className="font-mono text-[12.5px] uppercase tracking-[0.08em] text-[#b7cdbb]">{smb.firstKicker}</p>
-              {site.walkthroughOffer === "TBC" ? (
-                <span className="ph ml-auto text-[#f6d2c4]">{smb.firstBadge}</span>
-              ) : null}
-            </div>
+            <p className="font-mono text-[12.5px] uppercase tracking-[0.08em] text-[#b7cdbb]">{smb.firstKicker}</p>
             <h3 className="mt-3.5 mb-3 text-[28px] desk:text-[34px]">{smb.firstTitle}</h3>
             <p className="text-[16.5px] text-[#d3e0d5]">{smb.firstBody}</p>
             <ul className="my-[22px] flex list-none flex-wrap gap-2.5">

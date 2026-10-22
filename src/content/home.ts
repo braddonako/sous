@@ -18,9 +18,9 @@
  *   Custom software — from $15,000
  *   Care plan — $750 per month
  *
- * The Lead Gen Plan instead offers a free 30–45 minute workflow walkthrough
- * as the small-business first step. That conflict is unresolved. The page
- * shows the walkthrough and marks it TBC via site.walkthroughOffer.
+ * The first step on the page is a free meeting. It is not a working session,
+ * and it is not the $1,500 clarity session. Do not describe the meeting as
+ * something the visitor leaves with a finished plan.
  */
 
 export const home = {
@@ -44,7 +44,7 @@ export const home = {
     lede: "Your team already pays for AI tools. We redesign how you build around them, so ideas become tested features sooner, and ",
     ledeStrong:
       "your devs still own the architecture, the reviews and the sign-off.",
-    note: "20 minutes. No pitch deck.",
+    note: "Free meeting. 20 minutes. No pitch deck.",
     flow: {
       title: { neutral: "Ticket → PR", kitchen: "Order ticket" },
       example: "Example",
@@ -53,10 +53,10 @@ export const home = {
       caption: "Illustrative flow",
       status: { neutral: "Shipped", kitchen: "Order up" },
       steps: [
-        { n: "1", text: "Reads ticket + Figma design", who: "Agent", human: false },
-        { n: "2", text: "Plans from your agents.md", who: "Agent", human: false },
-        { n: "3", text: "Builds; a 2nd agent reviews", who: "Agent", human: false },
-        { n: "✓", text: "Reviews the PR and signs off", who: "Your dev", human: true },
+        { n: "1", text: "Picks up the ticket and the design", who: "Agent", human: false },
+        { n: "2", text: "Does the build", who: "Agent", human: false },
+        { n: "3", text: "Opens a pull request", who: "Agent", human: false },
+        { n: "✓", text: "Reviews and signs off", who: "Your dev", human: true },
       ],
     },
   },
@@ -98,27 +98,27 @@ export const home = {
   dev: {
     eyebrow: "For dev teams",
     title: "Start small. Measure it. Then go further.",
-    lede: "Each step is fixed in scope and built around your codebase. You'll know whether it works before you commit to the next one.",
+    lede: "It starts with a free meeting. Each step after that is fixed in scope and built around your codebase. You'll know whether it works before you commit to the next one.",
     scope: "Scoped on a call",
     rungs: [
       {
         n: "01",
         title: "Readiness audit",
         body: "We review one repo, your conventions and how your team uses AI today. You get a gap report, a plan and a baseline metric we pick together.",
-        aside: "Start here",
+        aside: "After we meet",
         core: false,
       },
       {
         n: "02",
         title: "agents.md setup",
-        body: "agents.md files and connectors built around your architecture, tuned on real tickets, so agent code looks like your team wrote it.",
+        body: "A setup built around your architecture and tuned on real tickets, so the code reads like your team wrote it.",
         aside: "Before / after",
         core: false,
       },
       {
         n: "03",
         title: "Workflow redesign",
-        body: "Devs own features end to end with no handoffs. Agents work from tickets and designs, build from your UI component library, and your team gets trained.",
+        body: "Devs own features end to end. Agents take tickets and designs through to review, and your team gets trained.",
         aside: "After setup",
         core: true,
         badge: "Core",
@@ -145,28 +145,28 @@ export const home = {
         n: "01",
         k: "Input",
         title: "Ticket + design",
-        body: "The Jira ticket and Figma design arrive through connectors.",
+        body: "The work starts from a ticket and a design.",
         tone: "input",
       },
       {
         n: "02",
         k: "Agent",
         title: "Plans",
-        body: "Drafts a plan. A dev approves or edits it.",
+        body: "The agent drafts an approach. Your dev can change it.",
         tone: "agent",
       },
       {
         n: "03",
         k: "Agent",
         title: "Builds",
-        body: "Uses your component library and agents.md rules.",
+        body: "The agent does the implementation.",
         tone: "agent",
       },
       {
         n: "04",
         k: "Agent",
         title: "Reviews",
-        body: "A second agent checks the work first.",
+        body: "The work is checked before it reaches your team.",
         tone: "agent",
       },
       {
@@ -192,7 +192,7 @@ export const home = {
     eyebrow: "For small businesses",
     titleLead: "Get hours back",
     titleRest: "from the work that eats your week.",
-    lede: "You don't need to understand AI to benefit from it. Tell us what slows your team down, and we'll show you what's worth fixing, in plain English. If nothing is, we'll say so.",
+    lede: "You don't need to understand AI to benefit from it. Tell us what slows your team down. We'll say, in plain English, if it's worth fixing. If it isn't, we'll say so.",
     helps: [
       {
         icon: "?",
@@ -255,11 +255,10 @@ export const home = {
     ],
     fine: "Examples of common problems, not past client results.",
     firstKicker: "Your first step",
-    firstBadge: "Placeholder · offer TBC",
-    firstTitle: "A free workflow walkthrough",
+    firstTitle: "A free meeting",
     firstBody:
-      "30–45 minutes. Walk us through the task that eats the most time, and you'll leave with a clear view of what's worth automating and how you could use AI safely, whether or not you work with us.",
-    firstMeta: ["30–45 min", "In person or video", "No prep needed"],
+      "20 minutes. Tell us what eats the time. We'll say whether it's worth fixing. It isn't a working session, and you don't owe us anything after.",
+    firstMeta: ["20 min", "In person or video", "No prep needed"],
     workTitle: "How we work with you",
     work: [
       {
@@ -330,7 +329,7 @@ export const home = {
       },
       {
         q: "Will AI agents wreck our codebase?",
-        a: "Agents don't get the final say. Your devs own the architecture, review every PR and sign off. Clear agents.md rules keep agents inside the lines.",
+        a: "Agents don't get the final say. Your devs own the architecture, review every PR and sign off. Clear rules keep the work inside the lines.",
       },
       {
         q: "I'm not technical. Can you still help my business?",
@@ -342,14 +341,14 @@ export const home = {
       },
       {
         q: "You're two people. Is that a risk?",
-        a: "That's why we keep the first step small: one repo or one workflow, a few weeks, measured. You'll know whether it works before you commit to more.",
+        a: "The first step is a free meeting. The first paid step stays small: one repo or one workflow, a few weeks, measured. You'll know whether it works before you commit to more.",
       },
     ],
   },
   cta: {
     eyebrow: "Let's talk",
     title: "Slow delivery or busywork? Let's fix the part that matters.",
-    body: "20 minutes, no pitch deck. If there's nothing worth fixing, we'll tell you.",
+    body: "A free meeting. 20 minutes, no pitch deck. If there's nothing worth fixing, we'll tell you.",
     emailLead: "Or email",
     emailBadge: "email TBC",
   },

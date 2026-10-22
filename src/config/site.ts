@@ -25,14 +25,11 @@ export const site = {
    */
   tagline: "Ship features faster with AI\u00A0agent workflows.",
   taglineEmphasis: "AI\u00A0agent workflows.",
-  location: "Parker, CO",
+  location: "Denver Metro",
 
-  /**
-   * PLACEHOLDER — confirm with Brad.
-   * Open decision: is "Denver metro, in person or remote" the right line?
-   */
-  serviceArea: "Denver metro, in person or remote",
-  serviceAreaStatus: "TBC" as PlaceholderStatus,
+  /** Where the free meeting can happen. */
+  serviceArea: "Denver Metro, in person or remote",
+  serviceAreaStatus: "confirmed" as PlaceholderStatus,
 
   /** Current GitHub Pages URL. Replace when a custom domain is chosen. */
   url: "https://braddonako.github.io/the-chefs",
@@ -76,11 +73,10 @@ export const site = {
   theme: "neutral" as ThemeName,
 
   /**
-   * PLACEHOLDER — small-business first step is not decided.
-   * The page shows the free workflow walkthrough and labels it TBC.
-   * The other option is the $1,500 clarity session noted in src/content/home.ts.
+   * The first step for both audiences is a free meeting, not a working
+   * session and not the paid clarity session.
    */
-  walkthroughOffer: "TBC" as PlaceholderStatus,
+  firstMeeting: "confirmed" as PlaceholderStatus,
 
   /**
    * PLACEHOLDER — founder photos TBC.
