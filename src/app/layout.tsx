@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Fraunces, IBM_Plex_Mono, Inter, Space_Grotesk } from "next/font/google";
 import { site } from "@/config/site";
 import { home } from "@/content/home";
+import { withBasePath } from "@/lib/base-path";
 import { fill } from "@/lib/fill";
 import "./globals.css";
 
@@ -40,13 +41,22 @@ export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title,
   description,
+  icons: {
+    icon: [
+      { url: withBasePath(site.assets.favicon), type: "image/svg+xml" },
+      { url: withBasePath(site.assets.favicon32), sizes: "32x32", type: "image/png" },
+      { url: withBasePath(site.assets.favicon16), sizes: "16x16", type: "image/png" },
+    ],
+    apple: [{ url: withBasePath(site.assets.appleTouch), sizes: "180x180", type: "image/png" }],
+  },
   openGraph: {
     title,
     description,
-    url: site.url,
+    url: "/",
     siteName: site.name,
     locale: "en_US",
     type: "website",
+    images: [{ url: site.assets.social, width: 400, height: 400, alt: site.name }],
   },
 };
 

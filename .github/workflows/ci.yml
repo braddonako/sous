@@ -22,11 +22,35 @@ jobs:
         run: npm run lint
       - name: Build static export
         run: npx next build
-      - name: Confirm the Pages base path
-        run: grep -q "/sous/_next/" out/index.html
-      - name: Confirm booking links are not a bare hash
+      - name: Confirm the Pages base path, audience routes, and favicon
         run: |
-          if grep -E 'href="#"([^a-zA-Z]|$)' out/index.html; then
+          grep -q "/sous/_next/" out/index.html
+          test -f out/teams/index.html
+          test -f out/business/index.html
+          grep -q "/sous/teams/" out/index.html
+          grep -q "/sous/business/" out/index.html
+          grep -q "/sous/brand/favicon.svg" out/index.html
+          grep -q "/sous/brand/favicon-32.png" out/index.html
+          grep -q "/sous/brand/favicon-16.png" out/index.html
+          grep -q "/sous/brand/apple-touch-icon-180.png" out/index.html
+          grep -q "linkedin.com/in/braddonakowski" out/index.html
+          grep -qE "Work we(&#x27;|&#39;|')ve shipped" out/teams/index.html
+          grep -qE "Work we(&#x27;|&#39;|')ve shipped" out/business/index.html
+          grep -q "AI Development Pipeline" out/teams/index.html
+          grep -q "Google Cloud" out/teams/index.html
+          if grep -q "AI Development Pipeline" out/business/index.html; then
+            echo "AI pipeline card is on the business page"
+            exit 1
+          fi
+          if grep -q "Google Cloud" out/business/index.html; then
+            echo "Stack line is on the business page"
+            exit 1
+          fi
+          if grep -R -E 'href="#"([^a-zA-Z]|$)' out/index.html out/teams/index.html out/business/index.html; then
             echo 'Found href="#"'
+            exit 1
+          fi
+          if grep -R -i -E '#e4572e|#d9532b' out; then
+            echo "Retired accent is in the export"
             exit 1
           fi

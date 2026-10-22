@@ -1,23 +1,15 @@
 import { site } from "@/config/site";
-import { home } from "@/content/home";
+import { business } from "@/content/business";
 import { BookCall } from "@/components/BookCall";
 
 export function SmallBusiness() {
-  const { smb } = home;
+  const { offer: smb } = business;
   return (
     <section id="smb" className="scroll-mt-6 bg-sage-soft py-16 desk:py-[104px]" aria-labelledby="smb-title">
       <div className="mx-auto w-full max-w-[1200px] px-5 desk:px-10">
-        <div className="mb-8 grid items-end gap-4 desk:mb-14 desk:grid-cols-2 desk:gap-14">
-          <div>
-            <p className="eyebrow text-sage-deep">{smb.eyebrow}</p>
-            <h2 id="smb-title" className="mt-4 text-[36px] desk:text-[52px]">
-              <span className="text-sage-deep">{smb.titleLead}</span>
-              <br />
-              {smb.titleRest}
-            </h2>
-          </div>
-          <p className="text-[16.5px] text-sage-copy desk:text-lg">{smb.lede}</p>
-        </div>
+        <h2 id="smb-title" className="mb-8 max-w-[14ch] text-[36px] desk:mb-14 desk:text-[52px]">
+          {smb.title}
+        </h2>
 
         <ul className="grid list-none gap-[18px] desk:grid-cols-3">
           {smb.helps.map((help) => (

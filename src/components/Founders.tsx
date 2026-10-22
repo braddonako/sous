@@ -1,4 +1,4 @@
-import { site } from "@/config/site";
+import { isHttpUrl, site } from "@/config/site";
 import { home } from "@/content/home";
 import { fill } from "@/lib/fill";
 
@@ -20,10 +20,11 @@ export function Founders() {
           {about.founders.map((founder) => {
             const photo = site.photos[founder.id];
             const bio = site.bioLines[founder.id];
+            const linkedin = site.founderLinkedin[founder.id];
             return (
               <li
                 key={founder.id}
-                className="grid gap-[18px] rounded-[20px] border border-line bg-white p-6 desk:grid-cols-[180px_1fr] desk:gap-7"
+                className="grid min-w-0 gap-[18px] rounded-[20px] border border-line bg-white p-6 min-[960px]:grid-cols-[minmax(0,180px)_minmax(0,1fr)] min-[960px]:gap-7"
               >
                 {photo ? (
                   // Relative paths stay valid under the GitHub Pages base path.
@@ -34,12 +35,21 @@ export function Founders() {
                     <span className="font-mono text-[12.5px] uppercase tracking-[0.08em]">{about.photoLabel}</span>
                   </div>
                 )}
-                <div>
+                <div className="min-w-0">
                   <h3 className="mt-1.5 text-[28px]">{founder.name}</h3>
                   <p className="my-2.5 font-mono text-[12.5px] uppercase tracking-[0.08em] text-accent-action">
                     {founder.role}
                   </p>
                   <p className="text-[15.5px] text-muted">{founder.body}</p>
+                  {isHttpUrl(linkedin) ? (
+                    <a
+                      href={linkedin}
+                      className="mt-3.5 inline-block font-mono text-[12.5px] uppercase tracking-[0.08em] text-accent-action underline underline-offset-[3px]"
+                      rel="noopener noreferrer"
+                    >
+                      LinkedIn
+                    </a>
+                  ) : null}
                   {bio ? (
                     <p className="mt-3.5 text-[15.5px] text-ink">{bio}</p>
                   ) : site.founderBios === "TBC" ? (

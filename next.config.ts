@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { basePath } from "./src/config/site";
 
 /**
  * GitHub Pages serves this site at /sous
@@ -9,12 +10,13 @@ import type { NextConfig } from "next";
  * The Pages workflow does not inject a path, so this value is what the
  * export uses. Set BASE_PATH="" when a custom domain serves the site
  * from the root.
+ *
+ * trailingSlash emits /teams/index.html so /sous/teams/ resolves on Pages.
  */
-const basePath = process.env.BASE_PATH !== undefined ? process.env.BASE_PATH : "/sous";
-
 const nextConfig: NextConfig = {
   output: "export",
   basePath,
+  trailingSlash: true,
   images: {
     unoptimized: true,
   },

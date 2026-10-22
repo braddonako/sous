@@ -1,7 +1,7 @@
-import { home } from "@/content/home";
+import { teams } from "@/content/teams";
 
 export function Proof() {
-  const { proof } = home;
+  const { proof } = teams;
   return (
     <section className="py-16 desk:py-[104px]" aria-labelledby="proof-title">
       <div className="mx-auto w-full max-w-[1200px] px-5 desk:px-10">
@@ -20,7 +20,7 @@ export function Proof() {
             <span className="absolute top-7 left-7 z-[2] rounded-md bg-ink px-[9px] py-1 font-mono text-[11px] uppercase tracking-[0.06em] text-white desk:top-11 desk:left-11">
               {proof.before}
             </span>
-            <span className="absolute top-7 left-[calc(50%+14px)] z-[2] rounded-md bg-accent-action px-[9px] py-1 font-mono text-[11px] uppercase tracking-[0.06em] text-white desk:top-11 desk:left-[calc(50%+22px)]">
+            <span className="absolute top-7 left-[calc(50%+14px)] z-[2] rounded-md bg-orange px-[9px] py-1 font-mono text-[11px] uppercase tracking-[0.06em] text-on-orange desk:top-11 desk:left-[calc(50%+22px)]">
               {proof.concept}
             </span>
             <div className="concept-screen" aria-hidden="true">
