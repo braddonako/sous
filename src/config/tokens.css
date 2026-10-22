@@ -1,0 +1,75 @@
+:root {
+  /* Approved brand palette, 2026-10-21. Core */
+  --sous-ink: #121417;
+  --sous-paper: #fbfaf7;
+  --sous-paper-warm: #f5f2ec;
+  --sous-orange: #f26b1d;
+  --sous-sage: #2f4a3a;
+  --sous-sage-light: #e6ede6;
+
+  /* Supporting neutrals */
+  --sous-ink-2: #1b1e23;
+  --sous-ink-3: #262a31;
+  --sous-footer: #0c0e10;
+  --sous-line: #e4dfd5;
+  --sous-line-dark: #30353d;
+  --sous-muted: #5b6068;
+  --sous-muted-dark: #a3a9b2;
+  --sous-sage-mid: #7e9c86;
+  --sous-sage-text: #46554a;
+
+  /* Orange scale. Tints toward white, shades toward ink. */
+  --sous-orange-50: #fef3ed;
+  --sous-orange-100: #fde7db;
+  --sous-orange-200: #fbd0b7;
+  --sous-orange-300: #f8b289;
+  --sous-orange-400: #f58f53;
+  --sous-orange-500: #f26b1d;
+  --sous-orange-600: #d35f1c;
+  --sous-orange-700: #af511b;
+  --sous-orange-800: #8b431a;
+  --sous-orange-900: #673519;
+
+  /* Roles */
+  --sous-bg: var(--sous-paper);
+  --sous-bg-alt: var(--sous-paper-warm);
+  --sous-text: var(--sous-ink);
+  --sous-text-muted: var(--sous-muted);
+  --sous-border: var(--sous-line);
+  --sous-cta-bg: var(--sous-orange);
+  --sous-cta-text: var(--sous-ink);
+  --sous-accent-text: var(--sous-orange-700);
+
+  /* Names the rest of the site uses. Fills stay Orange 500. Text on paper is Orange 700. */
+  --ink: var(--sous-ink);
+  --ink-2: var(--sous-ink-2);
+  --ink-3: var(--sous-ink-3);
+  --bone: var(--sous-paper-warm);
+  --paper: var(--sous-paper);
+  --line: var(--sous-line);
+  --line-dark: var(--sous-line-dark);
+  --muted: var(--sous-muted);
+  --muted-dark: var(--sous-muted-dark);
+  --orange: var(--sous-orange-500);
+  --orange-50: var(--sous-orange-50);
+  --orange-200: var(--sous-orange-200);
+  --orange-600: var(--sous-orange-600);
+  --orange-700: var(--sous-orange-700);
+  --accent: var(--orange);
+  --accent-action: var(--orange-700);
+  --accent-on-dark: var(--orange);
+  --accent-soft: var(--orange-50);
+  --cta-bg: var(--sous-cta-bg);
+  --cta-text: var(--sous-cta-text);
+  --sage: var(--sous-sage-mid);
+  --sage-soft: var(--sous-sage-light);
+  --sage-deep: var(--sous-sage);
+  --sage-copy: var(--sous-sage-text);
+  --footer: var(--sous-footer);
+  --hero-bg: var(--sous-ink);
+  --hero-fg: #ffffff;
+  --nav-border: var(--sous-line-dark);
+  --wait: var(--orange-700);
+  --arrow: var(--muted);
+  --photo: var(--muted);
+}

@@ -1,9 +1,9 @@
-import { home } from "@/content/home";
+import { teams } from "@/content/teams";
 
 export function DevTeams() {
-  const { dev } = home;
+  const { dev } = teams;
   return (
-    <section id="dev" className="scroll-mt-6 py-16 desk:py-[104px]" aria-labelledby="dev-title">
+    <section id="offer" className="scroll-mt-6 py-16 desk:py-[104px]" aria-labelledby="dev-title">
       <div className="mx-auto w-full max-w-[1200px] px-5 desk:px-10">
         <div className="mb-8 grid items-end gap-4 desk:mb-14 desk:grid-cols-2 desk:gap-14">
           <div>
@@ -26,7 +26,7 @@ export function DevTeams() {
               }
             >
               {rung.core && "badge" in rung ? (
-                <span className="absolute top-[22px] right-[22px] rounded-md bg-accent-action px-[9px] py-1 font-mono text-[11px] uppercase tracking-[0.06em] text-white">
+                <span className="absolute top-[22px] right-[22px] rounded-md bg-orange px-[9px] py-1 font-mono text-[11px] uppercase tracking-[0.06em] text-on-orange">
                   {rung.badge}
                 </span>
               ) : null}
@@ -44,7 +44,7 @@ export function DevTeams() {
         <aside className="mt-8 flex items-start gap-4 rounded-[14px] border border-line bg-white px-5 py-5 desk:mt-10 desk:px-7 desk:py-6">
           <span
             aria-hidden="true"
-            className="grid h-9 w-9 shrink-0 place-items-center rounded-[10px] bg-accent-action text-[16px] font-bold text-white"
+            className="grid h-9 w-9 shrink-0 place-items-center rounded-[10px] bg-orange text-[16px] font-bold text-on-orange"
           >
             ✓
           </span>

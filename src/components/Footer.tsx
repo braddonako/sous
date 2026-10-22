@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { isHttpUrl, isRealEmail, site } from "@/config/site";
 import { home } from "@/content/home";
 import { fill } from "@/lib/fill";
@@ -11,10 +12,16 @@ export function Footer() {
 
   return (
     <footer className="bg-footer py-[30px] text-sm text-muted-dark">
-      <div className="mx-auto flex w-full max-w-[1200px] flex-col items-start justify-between gap-3 px-5 desk:flex-row desk:items-center desk:px-10">
-        <span className="text-white">
-          <Wordmark compact />
-        </span>
+      <div className="mx-auto flex w-full max-w-[1200px] flex-col items-start justify-between gap-4 px-5 desk:flex-row desk:items-center desk:px-10">
+        <Wordmark tone="ink" size="footer" />
+        <nav aria-label="Footer" className="flex gap-4">
+          <Link href="/teams" className="underline underline-offset-[3px]">
+            {home.footer.teams}
+          </Link>
+          <Link href="/business" className="underline underline-offset-[3px]">
+            {home.footer.business}
+          </Link>
+        </nav>
         <p>{fill(home.footer.rights)}</p>
         {showEmail || showLinkedin ? (
           <p className="flex gap-4">

@@ -1,27 +1,22 @@
-import { DevTeams } from "@/components/DevTeams";
-import { Faq } from "@/components/Faq";
+import type { Metadata } from "next";
 import { FinalCta } from "@/components/FinalCta";
 import { Footer } from "@/components/Footer";
 import { Founders } from "@/components/Founders";
-import { Hero } from "@/components/Hero";
+import { HomeHero } from "@/components/HomeHero";
 import { Navbar } from "@/components/Navbar";
-import { Problem } from "@/components/Problem";
-import { Proof } from "@/components/Proof";
-import { SmallBusiness } from "@/components/SmallBusiness";
+import { home } from "@/content/home";
+import { pageMeta } from "@/lib/page-meta";
+
+export const metadata: Metadata = pageMeta(home.meta.title, home.meta.description, "/");
 
 export default function Home() {
   return (
     <>
-      <Navbar />
+      <Navbar current="home" />
       <main id="main">
-        <Hero />
-        <Problem />
-        <DevTeams />
-        <SmallBusiness />
-        <Proof />
+        <HomeHero />
         <Founders />
-        <Faq />
-        <FinalCta />
+        <FinalCta cta={home.cta} />
       </main>
       <Footer />
     </>

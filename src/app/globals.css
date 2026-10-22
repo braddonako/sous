@@ -1,39 +1,14 @@
 @import "tailwindcss";
+@import "../config/tokens.css";
 
 @theme {
   --breakpoint-desk: 701px;
 }
 
 :root {
-  --ink: #121417;
-  --ink-2: #1b1e23;
-  --ink-3: #262a31;
-  --bone: #f5f2ec;
-  --paper: #fbfaf7;
-  --line: #e4dfd5;
-  --line-dark: #30353d;
-  --muted: #5b6068;
-  --muted-dark: #a3a9b2;
-  --accent: #e4572e;
-  /* Deeper paprika so 16px white button text and small accent text clear WCAG AA. */
-  --accent-action: #c13e20;
-  --accent-on-dark: #e4572e;
-  --accent-soft: #fbe3d9;
-  --sage: #7e9c86;
-  --sage-soft: #e6ede6;
-  --sage-deep: #2f4a3a;
-  --sage-copy: #46554a;
-  --signal: #c9f27a;
-  --footer: #0c0e10;
-  --hero-bg: #121417;
-  --hero-fg: #ffffff;
-  --nav-border: #30353d;
   --font-head: var(--font-space-grotesk), "Inter", sans-serif;
   --font-body: var(--font-inter), system-ui, sans-serif;
   --font-mono-family: var(--font-ibm-plex-mono), ui-monospace, monospace;
-  --wait: #b83a1e;
-  --arrow: #88827c;
-  --photo: #5e584f;
 }
 
 .theme-kitchen {
@@ -41,7 +16,8 @@
   --ink-2: #2a231e;
   --ink-3: #352c25;
   --line-dark: #433830;
-  --accent: #d9532b;
+  /* Light kitchen surfaces: orange text uses Orange 700. Fills stay Orange 500. */
+  --accent: var(--orange-700);
   --paper: #f6f0e4;
   --bone: #efe6d6;
   --muted-dark: #bdaf9e;
@@ -62,6 +38,8 @@
   --color-muted: var(--muted);
   --color-muted-dark: var(--muted-dark);
   --color-accent: var(--accent);
+  --color-orange: var(--orange);
+  --color-on-orange: var(--cta-text);
   --color-accent-action: var(--accent-action);
   --color-accent-on-dark: var(--accent-on-dark);
   --color-accent-soft: var(--accent-soft);
@@ -69,7 +47,6 @@
   --color-sage-soft: var(--sage-soft);
   --color-sage-deep: var(--sage-deep);
   --color-sage-copy: var(--sage-copy);
-  --color-signal: var(--signal);
   --color-footer: var(--footer);
   --color-hero: var(--hero-bg);
   --color-hero-fg: var(--hero-fg);
@@ -253,8 +230,8 @@ summary::-webkit-details-marker {
   align-items: center;
   gap: 10px;
   border-radius: 999px;
-  background: var(--accent-action);
-  color: #fff;
+  background: var(--cta-bg);
+  color: var(--cta-text);
   font-weight: 600;
   line-height: 1;
   text-decoration: none;
@@ -262,7 +239,7 @@ summary::-webkit-details-marker {
 }
 
 .btn-primary:hover {
-  filter: brightness(1.08);
+  background: var(--orange-600);
 }
 
 .btn-lg {
@@ -283,9 +260,13 @@ summary::-webkit-details-marker {
 }
 
 .btn-primary:focus-visible {
-  outline: 3px solid #fff;
+  outline: 3px solid var(--paper);
   outline-offset: 2px;
-  box-shadow: 0 0 0 6px var(--ink);
+  box-shadow: 0 0 0 6px var(--cta-text);
+}
+
+.theme-kitchen .btn-primary {
+  box-shadow: inset 0 0 0 2px var(--cta-text);
 }
 
 .nav-link {
@@ -293,8 +274,17 @@ summary::-webkit-details-marker {
   text-decoration: none;
 }
 
-.nav-link:hover {
-  color: #fff;
+.nav-link:hover,
+.nav-link-active {
+  color: var(--hero-fg);
+}
+
+.nav-link-active {
+  box-shadow: inset 0 -2px 0 var(--orange);
+}
+
+.theme-kitchen .nav-link-active {
+  box-shadow: inset 0 -2px 0 var(--orange-700);
 }
 
 .theme-kitchen .nav-link {
@@ -339,8 +329,8 @@ summary::-webkit-details-marker {
 }
 
 .flow-step-human {
-  border-color: rgba(228, 87, 46, 0.45);
-  background: rgba(228, 87, 46, 0.07);
+  border-color: color-mix(in srgb, var(--orange) 45%, transparent);
+  background: color-mix(in srgb, var(--orange) 8%, transparent);
 }
 
 .flow-dot {
@@ -357,12 +347,16 @@ summary::-webkit-details-marker {
 }
 
 .flow-dot-human {
-  background: var(--accent-action);
-  color: #fff;
+  background: var(--orange);
+  color: var(--cta-text);
 }
 
 .flow-who-human {
-  color: #f4a68c;
+  color: var(--orange);
+}
+
+.work-highlight {
+  color: var(--accent-action);
 }
 
 .theme-kitchen .flowcard {
@@ -424,8 +418,8 @@ summary::-webkit-details-marker {
 }
 
 .theme-kitchen .flow-dot-human {
-  background: var(--accent-action);
-  color: #fff;
+  background: var(--orange);
+  color: var(--cta-text);
 }
 
 .theme-kitchen .flow-who,
@@ -533,7 +527,7 @@ summary::-webkit-details-marker {
 }
 
 .concept-after .concept-bar {
-  background: #f3d5c9;
+  background: var(--orange-200);
 }
 
 .concept-after .concept-block {

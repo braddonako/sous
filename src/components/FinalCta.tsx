@@ -1,9 +1,15 @@
 import { isRealEmail, site } from "@/config/site";
-import { home } from "@/content/home";
 import { BookCall } from "@/components/BookCall";
 
-export function FinalCta() {
-  const { cta } = home;
+type CtaCopy = {
+  eyebrow: string;
+  title: string;
+  body: string;
+  emailLead: string;
+  emailBadge: string;
+};
+
+export function FinalCta({ cta }: { cta: CtaCopy }) {
   const email = site.email.trim();
   const showEmail = isRealEmail(email) && email !== "#";
 

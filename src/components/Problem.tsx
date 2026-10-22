@@ -1,9 +1,9 @@
-import { home } from "@/content/home";
+import { teams } from "@/content/teams";
 
 export function Problem() {
-  const { problem } = home;
+  const { problem } = teams;
   return (
-    <section className="bg-bone py-[60px] desk:py-[88px]" aria-labelledby="problem-title">
+    <section id="problem" className="scroll-mt-6 bg-bone py-[60px] desk:py-[88px]" aria-labelledby="problem-title">
       <div className="mx-auto grid w-full max-w-[1200px] items-center gap-8 px-5 desk:grid-cols-[0.85fr_1.15fr] desk:gap-16 desk:px-10">
         <div>
           <p className="eyebrow text-accent-action">{problem.eyebrow}</p>
@@ -51,7 +51,7 @@ export function Problem() {
                 <span
                   className={
                     index === 1
-                      ? "rounded-[10px] bg-accent-action px-2.5 py-[7px] text-[13.5px] font-medium text-white desk:px-[13px] desk:py-[9px] desk:text-[15px]"
+                      ? "rounded-[10px] bg-orange px-2.5 py-[7px] text-[13.5px] font-medium text-on-orange desk:px-[13px] desk:py-[9px] desk:text-[15px]"
                       : "rounded-[10px] bg-ink px-2.5 py-[7px] text-[13.5px] font-medium text-white desk:px-[13px] desk:py-[9px] desk:text-[15px]"
                   }
                 >

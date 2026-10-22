@@ -7,6 +7,13 @@
 export const brandName = "Sous";
 
 /**
+ * GitHub Pages path prefix. Empty BASE_PATH serves a custom domain from the root.
+ * next.config.ts imports this. The literal stays in this file so the brand check
+ * can keep the name out of the rest of src/.
+ */
+export const basePath = process.env.BASE_PATH !== undefined ? process.env.BASE_PATH : "/sous";
+
+/**
  * Literals that must not appear under src/ outside this file.
  * Keep retired names in this list until they are gone from the repo.
  */
@@ -61,12 +68,24 @@ export const site = {
   linkedinStatus: "TBC" as PlaceholderStatus,
 
   logo: {
-    mark: "dot-grid" as const,
     wordmarkText: brandName,
+    /** Ink wordmark for light backgrounds. */
+    lockupOnLight: "/brand/lockup-light.svg",
+    /** Paper wordmark for ink backgrounds. */
+    lockupOnInk: "/brand/lockup-dark.svg",
+  },
+
+  assets: {
+    favicon: "/brand/favicon.svg",
+    favicon32: "/brand/favicon-32.png",
+    favicon16: "/brand/favicon-16.png",
+    appleTouch: "/brand/apple-touch-icon-180.png",
+    /** Square avatar used for the default social image. */
+    social: "/brand/avatar-light-400.png",
   },
 
   /**
-   * "neutral" is the default (ink, bone, paprika, Space Grotesk).
+   * "neutral" is the default (ink, paper, orange, Space Grotesk).
    * "kitchen" is the optional Fraunces / order-ticket treatment. Off unless
    * this is set to "kitchen".
    */
@@ -98,6 +117,15 @@ export const site = {
     mauricio: "",
   },
   founderBios: "TBC" as PlaceholderStatus,
+
+  /**
+   * Personal LinkedIn URLs on the founder cards. The company page stays in
+   * `linkedin` above and stays hidden until that URL exists. Empty hides the link.
+   */
+  founderLinkedin: {
+    brad: "https://www.linkedin.com/in/braddonakowski",
+    mauricio: "",
+  },
 };
 
 export function isHttpUrl(value: string): boolean {

@@ -62,6 +62,11 @@ if (!bookingFallback || bookingFallback === "#" || !bookingFallback.startsWith("
   process.exit(1);
 }
 
+if (readProp("location") !== "Denver Metro") {
+  console.error('site.location must stay "Denver Metro".');
+  process.exit(1);
+}
+
 const needles = [...new Set([brandName, ...guardLiterals, ...retiredBrandLiterals])].filter(
   (value) => value.trim().length >= 2,
 );
@@ -69,6 +74,9 @@ const needles = [...new Set([brandName, ...guardLiterals, ...retiredBrandLiteral
 const proofBanned = [
   "800K",
   "800,000",
+  "10K+ reviews",
+  "4.8 stars",
+  "4.8 star",
   "Emporia",
   "What We've Cooked",
   "What We’ve Cooked",
@@ -76,8 +84,12 @@ const proofBanned = [
   "Book a Table",
   "Future Client",
   "Sleep Diagnostics",
-  "Energy Management Platform",
 ];
+
+/** Retired accent hexes and words. Orange 500 / 700 from the approved palette replace them. */
+const retiredAccent = ["#e4572e", "#d9532b", "#c13e20", "#fbe3d9", "#f4a68c", "#b83a1e", "#f3d5c9", "paprika"];
+
+const copyBanned = ["figma", "reviewer agent", "reviewer agents", "agents.md rules"];
 
 function walk(dir) {
   const files = [];
@@ -134,6 +146,38 @@ for (const file of files) {
       failures.push(
         `${relative}:${lineOf(text, price.index)} prices stay commented in src/content/home.ts. The page does not list prices or price anything on the call.`,
       );
+    }
+  }
+
+  for (const retired of retiredAccent) {
+    const found = lower.indexOf(retired.toLowerCase());
+    if (found !== -1) {
+      failures.push(`${relative}:${lineOf(text, found)} retired accent "${retired}" is still in the source`);
+    }
+  }
+
+  for (const banned of copyBanned) {
+    const found = lower.indexOf(banned.toLowerCase());
+    if (found !== -1) {
+      failures.push(`${relative}:${lineOf(text, found)} public copy must not name "${banned}"`);
+    }
+  }
+
+  for (const mention of text.matchAll(/agents\.md(?:\s+\w+)?/gi)) {
+    if (mention[0].toLowerCase() !== "agents.md setup") {
+      failures.push(
+        `${relative}:${lineOf(text, mention.index)} only the offer name "agents.md setup" is allowed`,
+      );
+    }
+  }
+}
+
+const brandDir = path.join(root, "public/brand");
+if (fs.existsSync(brandDir)) {
+  for (const file of fs.readdirSync(brandDir).filter((name) => name.endsWith(".svg"))) {
+    const text = fs.readFileSync(path.join(brandDir, file), "utf8");
+    if (/#e4572e/i.test(text)) {
+      failures.push(`public/brand/${file} still uses the retired accent #E4572E`);
     }
   }
 }

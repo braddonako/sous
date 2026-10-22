@@ -14,7 +14,7 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000/sous](http://localhost:3000/sous). The dev server uses the same `basePath` as GitHub Pages.
+Open [http://localhost:3000/sous/](http://localhost:3000/sous/). The dev server uses the same `basePath` as GitHub Pages. Audience pages are `/sous/teams/` and `/sous/business/`.
 
 ## Scripts
 
@@ -29,9 +29,13 @@ Open [http://localhost:3000/sous](http://localhost:3000/sous). The dev server us
 
 | Change | File |
 |--------|------|
-| Name, tagline, location, email, booking URL, theme | `src/config/site.ts` |
-| Page copy | `src/content/home.ts` |
+| Name, tagline, location, email, booking URL, founder links, theme | `src/config/site.ts` |
+| Home copy | `src/content/home.ts` |
+| Dev-team page | `src/content/teams.ts` |
+| Small-business page | `src/content/business.ts` |
+| Project cards | `src/content/work.ts` |
 | Colors and type | `src/app/globals.css` |
+| Logo and favicon | `public/brand/` |
 
 `src/config/site.ts` is the only file under `src/` that may contain the brand name. `npm run check:brand` enforces that. The wordmark is text plus a dot-grid mark, so a rename does not require a new logo image.
 
