@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Check the brand name stays in config
+        run: node scripts/check-brand.mjs
+      - name: Lint
+        run: npm run lint
+      - name: Build static export
+        run: npx next build
+      - name: Confirm the Pages base path
+        run: grep -q "/the-chefs/_next/" out/index.html
+      - name: Confirm booking links are not a bare hash
+        run: |
+          if grep -E 'href="#"([^a-zA-Z]|$)' out/index.html; then
+            echo 'Found href="#"'
+            exit 1
+          fi

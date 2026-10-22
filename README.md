@@ -1,73 +1,46 @@
-# The Chefs
+# Studio site
 
-Marketing website for **The Chefs** — a software development studio. Built with Next.js, TypeScript, and Tailwind CSS.
+Marketing site for a two-person software studio. Next.js App Router, React, TypeScript, and Tailwind CSS. The production build is a static export served on GitHub Pages at `/the-chefs`.
 
 ## Prerequisites
 
-- [Node.js](https://nodejs.org/) v18+
-- npm (comes with Node)
+- Node.js 20+
+- npm
 
 ## Setup
 
 ```bash
-# Install dependencies
 npm install
-
-# Start the dev server
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the site.
+Open [http://localhost:3000/the-chefs](http://localhost:3000/the-chefs). The dev server uses the same `basePath` as GitHub Pages.
 
 ## Scripts
 
 | Command | Description |
 |---------|-------------|
-| `npm run dev` | Start dev server with hot reload |
-| `npm run build` | Production build |
-| `npm run start` | Serve the production build |
-| `npm run lint` | Run ESLint |
+| `npm run dev` | Dev server |
+| `npm run check:brand` | Fail if the brand name is hardcoded outside `src/config` |
+| `npm run build` | Brand check, then static export into `out/` |
+| `npm run lint` | ESLint |
 
-## Project Structure
+## Where to edit
 
-```
-src/
-  config/
-    menu.ts          # All site content: services, pricing, copy
-  components/
-    Navbar.tsx        # Sticky nav with mobile hamburger
-    Hero.tsx          # Landing hero section
-    MenuSection.tsx   # Services displayed as restaurant menu
-    About.tsx         # Team / capabilities
-    Contact.tsx       # CTA section
-    Footer.tsx
-  app/
-    globals.css       # Theme variables (colors, shadows, spacing)
-    layout.tsx        # Root layout with fonts and metadata
-    page.tsx          # Home page composition
-```
+| Change | File |
+|--------|------|
+| Name, tagline, location, email, booking URL, theme | `src/config/site.ts` |
+| Page copy | `src/content/home.ts` |
+| Colors and type | `src/app/globals.css` |
 
-## Theming
+`src/config/site.ts` is the only file under `src/` that may contain the brand name. `npm run check:brand` enforces that. The wordmark is text plus a dot-grid mark, so a rename does not require a new logo image.
 
-All brand colors are CSS custom properties in `src/app/globals.css`. To retheme the site, update these variables:
+Set `theme` to `"kitchen"` for the Fraunces, cream, order-ticket treatment. `"neutral"` is the default.
 
-```css
---brand-primary: #e85d26;      /* Buttons, accents */
---brand-secondary: #1a1a2e;    /* Dark backgrounds, logo text */
---brand-accent: #f0c040;       /* Highlights, labels */
-```
+Prices from the strategy notes are commented in `src/content/home.ts`. The page says "Scoped on a call".
 
-## Editing Content
-
-All menu items, pricing, and site copy live in `src/config/menu.ts`. Update that file to change what appears on the site — no need to touch components.
+Booking buttons never use `href="#"`. With no booking URL and no email, they use the `mailto:` fallback in config.
 
 ## Deployment
 
-Build and deploy anywhere that supports Node.js, or export as static:
-
-```bash
-npm run build
-npm run start     # serves on port 3000
-```
-
-Works out of the box on Vercel, Netlify, or any static host.
+Pushes to `main` deploy through `.github/workflows/nextjs.yml`. Do not push to `main` to preview. Open a pull request. `actions/configure-pages` injects `basePath` for the Pages site. Local and pull-request builds set the same path in `next.config.ts`. Override it with `BASE_PATH` (use an empty string for a custom domain at the root).
