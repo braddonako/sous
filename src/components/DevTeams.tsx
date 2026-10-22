@@ -21,8 +21,8 @@ export function DevTeams() {
               key={rung.n}
               className={
                 rung.core
-                  ? "relative flex flex-col rounded-[14px] border border-ink bg-ink px-6 pt-[26px] pb-6 text-white desk:min-h-[300px]"
-                  : "relative flex flex-col rounded-[14px] border border-line bg-white px-6 pt-[26px] pb-6 desk:min-h-[300px]"
+                  ? "relative flex h-full flex-col rounded-[14px] border border-ink bg-ink px-6 pt-[26px] pb-6 text-white"
+                  : "relative flex h-full flex-col rounded-[14px] border border-line bg-white px-6 pt-[26px] pb-6"
               }
             >
               {rung.core && "badge" in rung ? (
@@ -33,23 +33,14 @@ export function DevTeams() {
               <span className={rung.core ? "font-mono text-[13px] text-muted-dark" : "font-mono text-[13px] text-muted"}>
                 {rung.n}
               </span>
-              <h3 className="mt-[18px] mb-2 text-2xl tracking-[-0.02em] desk:mt-[30px] desk:mb-3">{rung.title}</h3>
-              <p className={rung.core ? "flex-1 text-[15px] text-muted-dark" : "flex-1 text-[15px] text-muted"}>
+              <h3 className="mt-[18px] mb-2 text-2xl tracking-[-0.02em] desk:mt-7 desk:mb-3">{rung.title}</h3>
+              <p className={rung.core ? "text-[15px] leading-relaxed text-muted-dark" : "text-[15px] leading-relaxed text-muted"}>
                 {rung.body}
-              </p>
-              <p
-                className={
-                  rung.core
-                    ? "mt-5 flex justify-between border-t border-line-dark pt-4 text-[13px] text-muted-dark"
-                    : "mt-5 flex justify-between border-t border-line pt-4 text-[13px] text-muted"
-                }
-              >
-                <span>{dev.scope}</span>
-                <span>{rung.aside}</span>
               </p>
             </li>
           ))}
         </ol>
+        <p className="mt-5 text-[15.5px] leading-relaxed text-muted desk:mt-6">{dev.priceLine}</p>
         <aside className="mt-8 flex items-start gap-4 rounded-[14px] border border-line bg-white px-5 py-5 desk:mt-10 desk:px-7 desk:py-6">
           <span
             aria-hidden="true"

@@ -132,7 +132,7 @@ for (const file of files) {
     const price = text.match(/\$\s?\d/);
     if (price) {
       failures.push(
-        `${relative}:${lineOf(text, price.index)} prices stay commented in src/content/home.ts. The page says "Scoped on a call".`,
+        `${relative}:${lineOf(text, price.index)} prices stay commented in src/content/home.ts. The page does not list prices or price anything on the call.`,
       );
     }
   }

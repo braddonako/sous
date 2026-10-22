@@ -37,7 +37,7 @@ Open [http://localhost:3000/sous](http://localhost:3000/sous). The dev server us
 
 Set `theme` to `"kitchen"` for the Fraunces, cream, order-ticket treatment. `"neutral"` is the default.
 
-Prices from the strategy notes are commented in `src/content/home.ts`. The page says "Scoped on a call".
+Prices from the strategy notes are commented in `src/content/home.ts`. The page does not list prices. After the call, the studio sends a plan and pricing.
 
 Booking buttons never use `href="#"`. With no booking URL and no email, they use the `mailto:` fallback in config.
 

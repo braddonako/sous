@@ -3,8 +3,8 @@
  * src/config/site.ts. Tokens: {brand} {location} {serviceArea} {year}.
  *
  * Prices are not rendered. The Strategy doc proposes them and the Company
- * Overview still lists pricing as an open question, so the page says
- * "Scoped on a call".
+ * Overview still lists pricing as an open question. The page does not price
+ * anything on the call. After the call, the studio sends a plan and pricing.
  *
  * Dev teams (Strategy doc, not validated):
  *   Readiness audit — $3,500 (2 weeks, credited to setup within 30 days)
@@ -98,27 +98,25 @@ export const home = {
     eyebrow: "For dev teams",
     title: "Start small. Measure it. Then go further.",
     lede: "It starts with a free meeting. Each step after that is fixed in scope and built around your codebase. You'll know whether it works before you commit to the next one.",
-    scope: "Scoped on a call",
+    priceLine:
+      "After the call, we'll send you a plan and pricing built around your team and codebase.",
     rungs: [
       {
         n: "01",
         title: "Readiness audit",
         body: "We review one repo, your conventions and how your team uses AI today. You get a gap report, a plan and a baseline metric we pick together.",
-        aside: "After we meet",
         core: false,
       },
       {
         n: "02",
         title: "agents.md setup",
         body: "A setup built around your architecture and tuned on real tickets, so the code reads like your team wrote it.",
-        aside: "Before / after",
         core: false,
       },
       {
         n: "03",
         title: "Workflow redesign",
         body: "Devs own features end to end. Agents take tickets and designs through to review, and your team gets trained.",
-        aside: "After setup",
         core: true,
         badge: "Core",
       },
@@ -126,7 +124,6 @@ export const home = {
         n: "04",
         title: "Ongoing support",
         body: "A retainer that keeps the setup tuned as your codebase changes, onboards new repos and gives your team someone to ask.",
-        aside: "Monthly",
         core: false,
       },
     ],
@@ -214,7 +211,7 @@ export const home = {
       },
       {
         title: "We fix one thing first",
-        body: "A small, fixed-scope project on one workflow, built on your existing tools and process. Scoped on a call.",
+        body: "A small, fixed-scope project on one workflow, built on your existing tools and process. After the call, we'll send a plan and pricing.",
       },
       {
         title: "Keep it running, then grow",
@@ -284,7 +281,7 @@ export const home = {
       },
       {
         q: "What does it cost?",
-        a: "Every engagement is fixed in scope and scoped on a call, so you know what you're getting before anything starts.",
+        a: "Every engagement is fixed in scope. After the call, we'll send a plan and pricing, so you know what you're getting before anything starts.",
       },
     ],
   },
