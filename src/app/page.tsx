@@ -1,20 +1,28 @@
-import Navbar from "@/components/Navbar";
-import Hero from "@/components/Hero";
-import MenuSection from "@/components/MenuSection";
-import Projects from "@/components/Projects";
-import Team from "@/components/Team";
-import Contact from "@/components/Contact";
-import Footer from "@/components/Footer";
+import { DevTeams } from "@/components/DevTeams";
+import { Faq } from "@/components/Faq";
+import { FinalCta } from "@/components/FinalCta";
+import { Footer } from "@/components/Footer";
+import { Founders } from "@/components/Founders";
+import { Hero } from "@/components/Hero";
+import { Navbar } from "@/components/Navbar";
+import { Problem } from "@/components/Problem";
+import { Proof } from "@/components/Proof";
+import { SmallBusiness } from "@/components/SmallBusiness";
 
 export default function Home() {
   return (
     <>
       <Navbar />
-      <Hero />
-      <MenuSection />
-      <Projects />
-      <Team />
-      <Contact />
+      <main id="main">
+        <Hero />
+        <Problem />
+        <DevTeams />
+        <SmallBusiness />
+        <Proof />
+        <Founders />
+        <Faq />
+        <FinalCta />
+      </main>
       <Footer />
     </>
   );
