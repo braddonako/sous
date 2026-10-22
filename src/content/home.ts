@@ -65,7 +65,7 @@ export const home = {
       kicker: "For CTOs & eng leads",
       title: "I run a dev team",
       body: "Get more out of the team you have. Agents take tickets and designs to reviewed PRs, tuned to your codebase.",
-      chips: ["Audit", "agents.md setup", "Workflow redesign", "Retainer"],
+      chips: ["Audit", "Infrastructure setup", "Workflow redesign", "Retainer"],
     },
     business: {
       href: "#smb",
@@ -109,7 +109,7 @@ export const home = {
       },
       {
         n: "02",
-        title: "agents.md setup",
+        title: "Infrastructure setup",
         body: "A setup built around your architecture and tuned on real tickets, so the code reads like your team wrote it.",
         core: false,
       },
