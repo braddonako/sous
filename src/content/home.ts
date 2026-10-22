@@ -38,7 +38,7 @@ export const home = {
     },
     titleLead: "Practical AI,",
     titleRest: "for the team you already have.",
-    lede: "Dev teams ship features faster, with the people who own the work still in charge. Small businesses get plain-English help and hours back from the busywork.",
+    lede: "Dev teams ship features faster, with the people who own the work still in charge. Small businesses get straight answers about AI and hours back from the busywork.",
     note: "Free meeting. 20 minutes. No pitch deck.",
   },
   paths: {
@@ -53,7 +53,7 @@ export const home = {
       href: "/business",
       kicker: "For owners & operators",
       title: "I run a business",
-      body: "Get hours back from the busywork. We explain AI in plain English and build small tools that fit how you already work.",
+      body: "Get hours back from the busywork. We show you where AI actually helps and build small tools that fit how you already work.",
       chips: ["Understand & use AI", "Automate busywork", "Custom software"],
     },
   },

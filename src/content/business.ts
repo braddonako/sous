@@ -1,5 +1,5 @@
 /**
- * Small-business page copy. Plain English: no dev-team jargon in the hero,
+ * Small-business page copy. No jargon: no dev-team jargon in the hero,
  * the offer, the FAQ, or the close. Project cards reuse the shared work copy.
  * Tokens: {brand} {location} {serviceArea} {year}.
  */
@@ -8,16 +8,16 @@ export const business = {
   meta: {
     title: "{brand} | Practical AI for small businesses",
     description:
-      "Plain-English help for owners and operators in {location}. Make sense of AI, automate busywork, and build the tools your business is missing.",
+      "Hands-on AI help for owners and operators in {location}. Make sense of AI, automate busywork, and build the tools your business is missing.",
   },
   hero: {
     eyebrow: {
       neutral: "For owners and operators · {location}",
-      kitchen: "Plain-English help · {location}",
+      kitchen: "Hands-on AI help · {location}",
     },
     titleLead: "Get hours back",
     titleRest: "from the work that eats your week.",
-    lede: "You don't need to understand AI to benefit from it. Tell us what slows your team down. We'll say, in plain English, if it's worth fixing. If it isn't, we'll say so.",
+    lede: "You don't need to understand AI to benefit from it. Tell us what slows your team down. We'll tell you honestly if it's worth fixing, and if it isn't, we'll say so.",
     note: "Free meeting. 20 minutes. No pitch deck.",
   },
   offer: {
@@ -28,7 +28,7 @@ export const business = {
         title: "Make sense of AI",
         body: "What it's actually good at today, what it isn't, and where your business should start.",
         points: [
-          "Plain-English guidance, no jargon",
+          "Straight answers, no jargon",
           "What's safe for your team to use",
           "A simple one-page usage policy",
         ],
@@ -107,7 +107,7 @@ export const business = {
     items: [
       {
         q: "I'm not technical. Can you still help my business?",
-        a: "Yes. We talk in plain English, start from how your team works today, and only build something if it clearly saves time.",
+        a: "Yes. We skip the jargon, start from how your team works today, and only build something if it clearly saves time.",
       },
       {
         q: "What happens on the call?",
