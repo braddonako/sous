@@ -1,4 +1,5 @@
 import { teams } from "@/content/teams";
+import { CheckIcon, TerminalIcon } from "@/components/icons";
 
 export function DevTeams() {
   const { dev } = teams;
@@ -7,7 +8,10 @@ export function DevTeams() {
       <div className="mx-auto w-full max-w-[1200px] px-5 desk:px-10">
         <div className="mb-8 grid items-end gap-4 desk:mb-14 desk:grid-cols-2 desk:gap-14">
           <div>
-            <p className="eyebrow text-accent-action">{dev.eyebrow}</p>
+            <div className="flex items-center gap-3">
+              <TerminalIcon size={28} className="shrink-0 text-ink" />
+              <p className="eyebrow text-accent-action">{dev.eyebrow}</p>
+            </div>
             <h2 id="dev-title" className="mt-4 text-[36px] desk:text-[52px]">
               {dev.title}
             </h2>
@@ -44,9 +48,9 @@ export function DevTeams() {
         <aside className="mt-8 flex items-start gap-4 rounded-[14px] border border-line bg-white px-5 py-5 desk:mt-10 desk:px-7 desk:py-6">
           <span
             aria-hidden="true"
-            className="grid h-9 w-9 shrink-0 place-items-center rounded-[10px] bg-orange text-[16px] font-bold text-on-orange"
+            className="grid h-9 w-9 shrink-0 place-items-center rounded-[10px] bg-orange text-on-orange"
           >
-            ✓
+            <CheckIcon size={18} mono />
           </span>
           <div>
             <h3 className="text-[22px] tracking-[-0.02em] desk:text-[26px]">{dev.chargeTitle}</h3>

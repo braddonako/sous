@@ -1,31 +1,64 @@
 import { site } from "@/config/site";
 import { business } from "@/content/business";
 import { BookCall } from "@/components/BookCall";
+import {
+  AutomateIcon,
+  CheckIcon,
+  ClarifyIcon,
+  ClockIcon,
+  CustomToolIcon,
+  MapPinIcon,
+  StorefrontIcon,
+  VideoIcon,
+} from "@/components/icons";
+
+const helpIcons = {
+  "?": ClarifyIcon,
+  "⟳": AutomateIcon,
+  "▢": CustomToolIcon,
+} as const;
+
+function meetingIcon(label: string) {
+  const value = label.toLowerCase();
+  if (value.includes("min")) return ClockIcon;
+  if (value.includes("video")) return VideoIcon;
+  if (value.includes("prep")) return CheckIcon;
+  return null;
+}
+
+function HelpMark({ icon }: { icon: keyof typeof helpIcons }) {
+  const Icon = helpIcons[icon];
+  return <Icon size={26} />;
+}
 
 export function SmallBusiness() {
   const { offer: smb } = business;
   return (
     <section id="smb" className="scroll-mt-6 bg-sage-soft py-16 desk:py-[104px]" aria-labelledby="smb-title">
       <div className="mx-auto w-full max-w-[1200px] px-5 desk:px-10">
-        <h2 id="smb-title" className="mb-8 max-w-[14ch] text-[36px] desk:mb-14 desk:text-[52px]">
-          {smb.title}
-        </h2>
+        <div className="mb-8 flex items-start gap-4 desk:mb-14">
+          <StorefrontIcon size={40} className="mt-1 shrink-0 text-sage-deep desk:mt-1.5" />
+          <h2 id="smb-title" className="max-w-[14ch] text-[36px] desk:text-[52px]">
+            {smb.title}
+          </h2>
+        </div>
 
         <ul className="grid list-none gap-[18px] desk:grid-cols-3">
           {smb.helps.map((help) => (
             <li key={help.title} className="rounded-[18px] border border-[#d3ded3] bg-white px-7 py-[30px]">
               <span
                 aria-hidden="true"
-                className="grid h-[46px] w-[46px] place-items-center rounded-xl bg-sage-deep font-display text-lg font-bold text-white"
+                className="grid h-[46px] w-[46px] place-items-center rounded-xl bg-sage-deep text-white"
               >
-                {help.icon}
+                <HelpMark icon={help.icon} />
               </span>
               <h3 className="mt-[22px] mb-2.5 text-[25px] tracking-[-0.02em]">{help.title}</h3>
               <p className="text-[15.5px] text-[#4e5a52]">{help.body}</p>
               <ul className="mt-4 flex list-none flex-col gap-2 text-[14.5px] text-[#2e3a32]">
                 {help.points.map((point) => (
-                  <li key={point} className="relative pl-[22px] before:absolute before:top-[9px] before:left-0 before:h-0.5 before:w-2.5 before:bg-sage before:content-['']">
-                    {point}
+                  <li key={point} className="flex items-start gap-2">
+                    <CheckIcon size={16} className="mt-0.5 shrink-0 text-sage-deep" />
+                    <span>{point}</span>
                   </li>
                 ))}
               </ul>
@@ -61,18 +94,25 @@ export function SmallBusiness() {
             <h3 className="mt-3.5 mb-3 text-[28px] desk:text-[34px]">{smb.firstTitle}</h3>
             <p className="text-[16.5px] text-[#d3e0d5]">{smb.firstBody}</p>
             <ul className="my-[22px] flex list-none flex-wrap gap-2.5">
-              {smb.firstMeta.map((item) => (
-                <li
-                  key={item}
-                  className="rounded-full border border-white/25 px-3 py-1.5 text-[13.5px] text-[#e6eee7]"
-                >
-                  {item}
-                </li>
-              ))}
+              {smb.firstMeta.map((item) => {
+                const MetaIcon = meetingIcon(item);
+                return (
+                  <li
+                    key={item}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-white/25 px-3 py-1.5 text-[13.5px] text-[#e6eee7]"
+                  >
+                    {MetaIcon ? <MetaIcon size={16} /> : null}
+                    {item}
+                  </li>
+                );
+              })}
             </ul>
             <div className="mt-auto flex flex-col items-start gap-3.5 desk:flex-row desk:items-center desk:gap-5">
               <BookCall />
-              <p className="text-[15px] text-[#d3e0d5]">{site.serviceArea}</p>
+              <p className="inline-flex items-center gap-2 text-[15px] text-[#d3e0d5]">
+                <MapPinIcon size={18} />
+                {site.serviceArea}
+              </p>
             </div>
           </div>
 

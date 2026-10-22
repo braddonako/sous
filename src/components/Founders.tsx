@@ -1,6 +1,7 @@
 import { isHttpUrl, site } from "@/config/site";
 import { home } from "@/content/home";
 import { fill } from "@/lib/fill";
+import { ArrowUpRightIcon, LinkedinIcon } from "@/components/icons";
 
 export function Founders() {
   const { about } = home;
@@ -44,10 +45,12 @@ export function Founders() {
                   {isHttpUrl(linkedin) ? (
                     <a
                       href={linkedin}
-                      className="mt-3.5 inline-block font-mono text-[12.5px] uppercase tracking-[0.08em] text-accent-action underline underline-offset-[3px]"
+                      className="mt-3.5 inline-flex items-center gap-1.5 font-mono text-[12.5px] uppercase tracking-[0.08em] text-accent-action underline underline-offset-[3px]"
                       rel="noopener noreferrer"
                     >
+                      <LinkedinIcon size={16} className="text-ink" />
                       LinkedIn
+                      <ArrowUpRightIcon size={14} className="text-ink" />
                     </a>
                   ) : null}
                   {bio ? (

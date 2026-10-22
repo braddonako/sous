@@ -1,3 +1,5 @@
+import { MinusIcon, PlusIcon } from "@/components/icons";
+
 type FaqCopy = {
   eyebrow: string;
   title: string;
@@ -18,15 +20,18 @@ export function Faq({ faq }: { faq: FaqCopy }) {
         </div>
         <div>
           {faq.items.map((item) => (
-            <article key={item.q} className="border-t border-line py-6 last:border-b">
-              <h3 className="flex items-start justify-between gap-5 text-[21px] leading-snug tracking-[-0.015em]">
-                {item.q}
-                <span aria-hidden="true" className="font-sans font-normal text-muted">
-                  +
+            <details key={item.q} open className="faq-item border-t border-line last:border-b">
+              <summary className="flex cursor-pointer items-start justify-between gap-5 py-6">
+                <h3 className="text-[21px] leading-snug tracking-[-0.015em]">{item.q}</h3>
+                <span className="faq-plus mt-0.5 text-muted" aria-hidden="true">
+                  <PlusIcon size={22} />
                 </span>
-              </h3>
-              <p className="mt-2.5 max-w-[640px] text-base text-muted">{item.a}</p>
-            </article>
+                <span className="faq-minus mt-0.5 text-muted" aria-hidden="true">
+                  <MinusIcon size={22} />
+                </span>
+              </summary>
+              <p className="-mt-3 max-w-[640px] pb-6 text-base text-muted">{item.a}</p>
+            </details>
           ))}
         </div>
       </div>
