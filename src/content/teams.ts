@@ -66,7 +66,7 @@ export const teams = {
       },
       {
         n: "02",
-        title: "agents.md setup",
+        title: "Infrastructure setup",
         body: "A setup built around your architecture and tuned on real tickets, so the code reads like your team wrote it.",
         core: false,
       },
