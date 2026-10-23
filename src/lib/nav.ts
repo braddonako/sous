@@ -1,4 +1,4 @@
-export type Audience = "home" | "teams" | "business";
+export type Audience = "home" | "teams" | "business" | "survey";
 
 export type NavItem = {
   label: string;

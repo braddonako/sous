@@ -19,6 +19,8 @@ export const business = {
     titleRest: "from the work that eats your week.",
     lede: "You don't need to understand AI to benefit from it. Tell us what slows your team down, and we'll tell you whether it's worth fixing.",
     note: "Free meeting. 20 minutes. No pitch deck.",
+    readinessLink: "Not ready for a call? Take the 3-minute AI readiness check",
+    readinessHref: "/survey/?path=business",
   },
   offer: {
     title: "What we can take on",

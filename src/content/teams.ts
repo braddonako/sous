@@ -17,6 +17,8 @@ export const teams = {
     lede: "Your team already pays for AI tools. We redesign how you build around them, so ideas become tested features sooner, and ",
     ledeStrong: "your devs still own the architecture, the reviews and the sign-off.",
     note: "Free meeting. 20 minutes. No pitch deck.",
+    readinessLink: "Not ready for a call? Take the 3-minute AI readiness check",
+    readinessHref: "/survey/?path=teams",
     flow: {
       title: { neutral: "Ticket → PR", kitchen: "Order ticket" },
       example: "Example",

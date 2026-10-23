@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { pickTheme } from "@/config/site";
 import { business } from "@/content/business";
 import { fill } from "@/lib/fill";
@@ -19,6 +20,11 @@ export function BusinessHero() {
           <BookCall />
           <p className="text-[15px] text-[#d3e0d5]">{hero.note}</p>
         </div>
+        <p className="mt-4 max-w-[640px] text-[15px]">
+          <Link href={hero.readinessHref} className="text-white underline underline-offset-[3px]">
+            {hero.readinessLink}
+          </Link>
+        </p>
       </div>
     </header>
   );
