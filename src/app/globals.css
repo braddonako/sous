@@ -603,3 +603,255 @@ summary::-webkit-details-marker {
 .nav-disclosure[open] .nav-close-label {
   display: block;
 }
+
+.survey-focus:focus,
+.survey-focus:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.survey-path {
+  width: 100%;
+  border: 1px solid var(--line);
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.survey-path:hover {
+  border-color: var(--ink);
+}
+
+.survey-dots {
+  display: flex;
+  gap: 6px;
+  max-width: 280px;
+  margin-top: 12px;
+}
+
+.survey-dot {
+  height: 8px;
+  flex: 1;
+  border-radius: 999px;
+  background: var(--bone);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.survey-dot-on {
+  background: var(--orange);
+  box-shadow: none;
+}
+
+.survey-fieldset {
+  min-width: 0;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.survey-choice {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+  padding: 12px 14px;
+  cursor: pointer;
+  font: inherit;
+  line-height: 1.35;
+}
+
+.survey-choice input {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: none;
+  accent-color: var(--sage-deep);
+}
+
+.survey-choice input:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.survey-choice:has(:focus-visible) {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px var(--accent);
+}
+
+.survey-choice-on {
+  border-color: var(--orange);
+  background: var(--accent-soft);
+  box-shadow: inset 4px 0 0 var(--sage-deep);
+}
+
+.survey-text {
+  width: 100%;
+  min-height: 140px;
+  resize: vertical;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+  padding: 14px 16px;
+  color: var(--ink);
+  font: inherit;
+  line-height: 1.5;
+}
+
+.btn-quiet {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  border: 0;
+  background: transparent;
+  padding: 12px 8px;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.btn-primary[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn-primary[aria-disabled="true"]:hover {
+  background: var(--cta-bg);
+}
+
+.survey-next {
+  justify-content: center;
+}
+
+@media (max-width: 700px) {
+  .survey-next {
+    width: 100%;
+  }
+}
+
+.survey-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.survey-segs {
+  display: flex;
+  flex: 1;
+  gap: 6px;
+  min-width: 0;
+}
+
+.survey-seg {
+  height: 18px;
+  flex: 1;
+  border-radius: 999px;
+  background: var(--bone);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.survey-seg-on {
+  background: var(--orange);
+  box-shadow: none;
+  animation: survey-seg-in 480ms ease backwards;
+}
+
+.survey-bar-word {
+  flex: none;
+  width: 9.75rem;
+  color: var(--sage-deep);
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: right;
+  white-space: nowrap;
+}
+
+@keyframes survey-seg-in {
+  from {
+    background-color: var(--bone);
+  }
+  to {
+    background-color: var(--orange);
+  }
+}
+
+.survey-suggestions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.survey-suggestion {
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--sage-deep);
+  border-radius: 16px;
+  background: #fff;
+  padding: 16px 18px;
+}
+
+.survey-echo {
+  border-radius: 16px;
+  background: var(--bone);
+  padding: 16px 18px;
+}
+
+.survey-book .btn-primary {
+  max-width: 100%;
+  white-space: normal;
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .survey-book .btn-primary {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 380px) {
+  .survey-bar-row {
+    flex-wrap: wrap;
+  }
+
+  .survey-segs {
+    flex: 1 1 100%;
+  }
+
+  .survey-bar-word {
+    width: auto;
+    text-align: left;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .survey-seg-on {
+    animation: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .survey-choice:has(:focus-visible) {
+    outline: 3px solid CanvasText;
+    box-shadow: none;
+  }
+
+  .survey-choice-on {
+    border-color: CanvasText;
+  }
+
+  .survey-seg-on,
+  .survey-dot-on {
+    background: CanvasText;
+    forced-color-adjust: none;
+  }
+}

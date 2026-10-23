@@ -33,6 +33,7 @@ Open [http://localhost:3000/sous/](http://localhost:3000/sous/). The dev server 
 | Home copy | `src/content/home.ts` |
 | Dev-team page | `src/content/teams.ts` |
 | Small-business page | `src/content/business.ts` |
+| AI readiness check | `src/content/survey.ts` |
 | Project cards | `src/content/work.ts` |
 | Colors and type | `src/app/globals.css` |
 | Logo and favicon | `public/brand/` |

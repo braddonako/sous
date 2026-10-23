@@ -2,7 +2,7 @@ import { getBookCall } from "@/config/site";
 import { home } from "@/content/home";
 import { ArrowRightIcon, ArrowUpRightIcon, CalendarIcon } from "@/components/icons";
 
-export function BookCall({ size = "default" }: { size?: "default" | "nav" }) {
+export function BookCall({ size = "default", label }: { size?: "default" | "nav"; label?: string }) {
   const { href, kind } = getBookCall();
   const external = kind === "booking";
   const iconSize = size === "nav" ? 16 : 18;
@@ -15,7 +15,7 @@ export function BookCall({ size = "default" }: { size?: "default" | "nav" }) {
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
     >
       {size === "default" ? <CalendarIcon size={iconSize} mono /> : null}
-      {home.bookLabel}
+      {label ?? home.bookLabel}
       <Trailing size={iconSize} mono />
       {kind === "placeholder" ? (
         <span className="sr-only">Booking link is not set yet. This opens a placeholder email.</span>

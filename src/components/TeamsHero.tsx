@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { pickTheme, site } from "@/config/site";
 import { teams } from "@/content/teams";
 import { fill } from "@/lib/fill";
@@ -57,6 +58,11 @@ export function TeamsHero() {
               <BookCall />
               <p className="hero-note text-[15px]">{hero.note}</p>
             </div>
+            <p className="mt-4 max-w-[560px] text-[15px]">
+              <Link href={hero.readinessHref} className="text-hero-fg underline underline-offset-[3px]">
+                {hero.readinessLink}
+              </Link>
+            </p>
           </div>
 
           <figure className="flowcard" aria-label="Illustrative example, not a real client ticket">
