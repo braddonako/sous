@@ -4,12 +4,15 @@ import { useEffect, useRef, useState, type FormEvent, type RefObject } from "rea
 import { useSearchParams } from "next/navigation";
 import { home } from "@/content/home";
 import {
+  OTHER_TEXT_MAX,
+  otherAnswerKey,
   parseSurveyPath,
   questionsFor,
   resultFor,
   survey,
   type ScoredArea,
   type SurveyAnswers,
+  type SurveyOption,
   type SurveyPath,
   type SurveyQuestion,
   type SurveyResult,
@@ -174,20 +177,36 @@ function QuestionStep({
 }) {
   const questions = questionsFor(path);
   const question = questions[index];
+  const detailRef = useRef<HTMLInputElement>(null);
+  const [detailFocusTick, setDetailFocusTick] = useState(0);
+
+  useEffect(() => {
+    if (detailFocusTick === 0) return;
+    detailRef.current?.focus();
+  }, [detailFocusTick]);
+
   if (!question) return null;
   const total = questions.length;
   const ready = isAnswered(question, answers);
   const progress = `Question ${index + 1} of ${total}`;
+  const otherKey = otherAnswerKey(question.id);
 
-  function selectSingle(optionId: string) {
-    onAnswers({ ...answers, [question.id]: optionId });
+  function selectSingle(option: SurveyOption) {
+    onAnswers({ ...answers, [question.id]: option.id });
+    if (option.detail) setDetailFocusTick((tick) => tick + 1);
   }
 
-  function toggleOption(optionId: string) {
+  function toggleOption(option: SurveyOption) {
     const value = answers[question.id];
     const current = Array.isArray(value) ? value : [];
-    const next = current.includes(optionId) ? current.filter((id) => id !== optionId) : [...current, optionId];
+    const selected = current.includes(option.id);
+    const next = selected ? current.filter((id) => id !== option.id) : [...current, option.id];
     onAnswers({ ...answers, [question.id]: next });
+    if (option.detail && !selected) setDetailFocusTick((tick) => tick + 1);
+  }
+
+  function setOther(text: string) {
+    onAnswers({ ...answers, [otherKey]: text.slice(0, OTHER_TEXT_MAX) });
   }
 
   function setText(text: string) {
@@ -231,17 +250,42 @@ function QuestionStep({
             {question.options?.map((option) => {
               const value = answers[question.id];
               const selected = question.kind === "single" ? value === option.id : Array.isArray(value) && value.includes(option.id);
+              const otherValue = answers[otherKey];
               return (
-                <label key={option.id} className={selected ? "survey-choice survey-choice-on" : "survey-choice"}>
-                  <input
-                    type={question.kind === "single" ? "radio" : "checkbox"}
-                    name={question.id}
-                    value={option.id}
-                    checked={selected}
-                    onChange={() => (question.kind === "single" ? selectSingle(option.id) : toggleOption(option.id))}
-                  />
-                  <span>{option.label}</span>
-                </label>
+                <div key={option.id}>
+                  <label className={selected ? "survey-choice survey-choice-on" : "survey-choice"}>
+                    <input
+                      type={question.kind === "single" ? "radio" : "checkbox"}
+                      name={question.id}
+                      value={option.id}
+                      checked={selected}
+                      onChange={() => (question.kind === "single" ? selectSingle(option) : toggleOption(option))}
+                    />
+                    <span>{option.label}</span>
+                  </label>
+                  {option.detail && selected ? (
+                    <div className="survey-other">
+                      <label className="survey-other-label" htmlFor={`${question.id}-other`}>
+                        {option.detail.label} <span className="font-normal text-muted">Optional</span>
+                      </label>
+                      <input
+                        ref={detailRef}
+                        id={`${question.id}-other`}
+                        className="survey-other-input"
+                        type="text"
+                        name={otherKey}
+                        maxLength={OTHER_TEXT_MAX}
+                        placeholder={option.detail.placeholder}
+                        value={typeof otherValue === "string" ? otherValue : ""}
+                        autoComplete="off"
+                        onChange={(event) => setOther(event.target.value)}
+                        onKeyDown={(event) => {
+                          if (event.key === "Enter") event.preventDefault();
+                        }}
+                      />
+                    </div>
+                  ) : null}
+                </div>
               );
             })}
           </div>
