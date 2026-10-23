@@ -21,20 +21,25 @@ export function HomeHero() {
           <p className="hero-note text-[15px]">{hero.note}</p>
         </div>
 
-        <div className="mt-10 grid gap-3.5 desk:mt-12 desk:grid-cols-2 desk:gap-5">
-          <PathCard path={paths.dev} />
-          <PathCard path={paths.business} business />
+        <div className="mt-10 desk:mt-12">
+          <p className="eyebrow hero-kicker">{paths.prompt}</p>
+          <div className="mt-3.5 grid gap-3.5 desk:mt-4 desk:grid-cols-2 desk:gap-5">
+            <PathCard path={paths.business} business />
+            <PathCard path={paths.dev} />
+          </div>
         </div>
       </div>
     </header>
   );
 }
 
+type HomePath = (typeof home.paths)["business"] | (typeof home.paths)["dev"];
+
 function PathCard({
   path,
   business = false,
 }: {
-  path: (typeof home.paths)[keyof typeof home.paths];
+  path: HomePath;
   business?: boolean;
 }) {
   const titleId = business ? "path-business-title" : "path-dev-title";
@@ -63,13 +68,6 @@ function PathCard({
       <p id={bodyId} className="max-w-[520px] text-base text-muted">
         {path.body}
       </p>
-      <ul className="mt-3.5 flex list-none flex-wrap gap-2">
-        {path.chips.map((chip) => (
-          <li key={chip} className="path-chip">
-            {chip}
-          </li>
-        ))}
-      </ul>
     </Link>
   );
 }
