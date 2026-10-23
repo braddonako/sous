@@ -30,8 +30,9 @@ export type SurveyPath = "business" | "teams";
 export type AreaScore = 1 | 2 | 3;
 
 /**
- * Question id → option id, list of option ids, or free text.
+ * Question id → option id, list of option ids, free text, or a list of tool names.
  * A short note beside an Other choice is stored at `${questionId}_other`.
+ * `tools` is the names they picked. Custom tools are stored as typed.
  */
 export type SurveyAnswers = Record<string, string | string[]>;
 
@@ -42,7 +43,82 @@ export function otherAnswerKey(questionId: string): string {
   return `${questionId}_other`;
 }
 
-export type QuestionKind = "single" | "multi" | "text";
+export const TOOL_NAME_MAX = 80;
+
+export type ToolCategory = "accounting" | "office" | "crm" | "industry" | "basic" | "common";
+
+export type KnownTool = {
+  name: string;
+  category: ToolCategory;
+};
+
+/** Grouped so scoring can tell a named system from spreadsheets or paper. */
+export const toolGroups: { category: ToolCategory; tools: readonly string[] }[] = [
+  { category: "accounting", tools: ["QuickBooks", "Xero", "FreshBooks", "Wave"] },
+  { category: "office", tools: ["Google Workspace", "Microsoft 365", "Excel or Google Sheets"] },
+  { category: "crm", tools: ["Salesforce", "HubSpot", "Redtail", "Wealthbox", "Zoho CRM", "A CRM"] },
+  {
+    category: "industry",
+    tools: ["eMoney", "Orion", "Envestnet", "MoneyGuidePro", "Jobber", "ServiceTitan", "Clio", "Shopify", "Square"],
+  },
+  { category: "basic", tools: ["Mostly spreadsheets", "Mostly paper"] },
+  { category: "common", tools: ["Slack", "Zoom", "Calendly", "DocuSign", "Dropbox", "Mailchimp"] },
+];
+
+export const knownTools: KnownTool[] = toolGroups.flatMap((group) =>
+  group.tools.map((name) => ({ name, category: group.category })),
+);
+
+/** Shown as tap targets so someone can answer without typing. */
+export const popularTools = [
+  "Google Workspace",
+  "Microsoft 365",
+  "QuickBooks",
+  "Excel or Google Sheets",
+  "A CRM",
+  "Mostly paper",
+] as const;
+
+export type ToolChoice = {
+  kind: "known" | "add";
+  name: string;
+};
+
+export function findKnownTool(name: string): KnownTool | undefined {
+  const key = name.trim().toLowerCase();
+  if (!key) return undefined;
+  return knownTools.find((tool) => tool.name.toLowerCase() === key);
+}
+
+/**
+ * Known tools whose names contain the query, then "Add" when the text is not
+ * already a known tool or a selected name. Matching is case-insensitive.
+ */
+export function toolChoices(query: string, selected: readonly string[]): ToolChoice[] {
+  const q = query.trim().toLowerCase();
+  const selectedKeys = new Set(selected.map((name) => name.trim().toLowerCase()));
+  const matches: ToolChoice[] = knownTools
+    .filter((tool) => !selectedKeys.has(tool.name.toLowerCase()))
+    .filter((tool) => q.length === 0 || tool.name.toLowerCase().includes(q))
+    .map((tool) => ({ kind: "known", name: tool.name }));
+  if (q.length === 0) return matches;
+  const exactKnown = knownTools.some((tool) => tool.name.toLowerCase() === q);
+  if (!exactKnown && !selectedKeys.has(q)) {
+    matches.push({ kind: "add", name: query.trim().slice(0, TOOL_NAME_MAX) });
+  }
+  return matches;
+}
+
+/** Canonical known name, or the custom text as typed. Null when blank or already selected. */
+export function acceptToolName(typed: string, selected: readonly string[]): string | null {
+  const trimmed = typed.trim().slice(0, TOOL_NAME_MAX);
+  if (!trimmed) return null;
+  const name = findKnownTool(trimmed)?.name ?? trimmed;
+  if (selected.some((item) => item.trim().toLowerCase() === name.toLowerCase())) return null;
+  return name;
+}
+
+export type QuestionKind = "single" | "multi" | "text" | "tools";
 
 export type SurveyOption = {
   id: string;
@@ -140,6 +216,14 @@ export const survey = {
     single: "Choose one.",
     multi: "Choose all that apply.",
     text: "Optional. You can leave this blank.",
+    tools: "Search or tap every tool you use.",
+  },
+  toolPicker: {
+    label: "Search tools",
+    placeholder: "Search or type a tool, e.g. QuickBooks",
+    popular: "Or tap a common one",
+    already: "Already added",
+    browseEmpty: "Type a name to add another tool.",
   },
 } as const;
 
@@ -291,21 +375,7 @@ const businessQuestions: SurveyQuestion[] = [
   {
     id: "tools",
     prompt: "What do you run the business on?",
-    kind: "multi",
-    options: [
-      { id: "quickbooks", label: "QuickBooks or other accounting" },
-      { id: "google", label: "Google Workspace" },
-      { id: "microsoft", label: "Microsoft 365" },
-      { id: "crm", label: "A CRM" },
-      { id: "industry", label: "Industry-specific software" },
-      {
-        id: "other-software",
-        label: "Other software",
-        detail: { label: "Which software?", placeholder: "e.g. eMoney, Redtail, Salesforce" },
-      },
-      { id: "spreadsheets", label: "Mostly spreadsheets" },
-      { id: "paper", label: "Mostly paper" },
-    ],
+    kind: "tools",
   },
   {
     id: "ai",
@@ -500,60 +570,11 @@ const businessSuggestions: SuggestionDef[] = [
     text: "These tasks are swallowing the week. Start with the one that annoys you most.",
   },
   {
-    id: "tools-paper",
+    id: "tools-connect",
     areaId: "tools",
     questionId: "tools",
-    optionIds: ["paper"],
-    text: "Move one paper process onto the computer, then let a tool do the repeat steps.",
-  },
-  {
-    id: "tools-spreadsheets",
-    areaId: "tools",
-    questionId: "tools",
-    optionIds: ["spreadsheets"],
-    text: "Keep the spreadsheet you already use, and stop retyping its rows into other places.",
-  },
-  {
-    id: "tools-crm",
-    areaId: "tools",
-    questionId: "tools",
-    optionIds: ["crm"],
-    text: "Keep customer details in the CRM you already use, and stop copying them out by hand.",
-  },
-  {
-    id: "tools-quickbooks",
-    areaId: "tools",
-    questionId: "tools",
-    optionIds: ["quickbooks"],
-    text: "Let the next step use the accounting records you already keep.",
-  },
-  {
-    id: "tools-google",
-    areaId: "tools",
-    questionId: "tools",
-    optionIds: ["google"],
-    text: "Put the first helper in the Google tools your team already opens.",
-  },
-  {
-    id: "tools-microsoft",
-    areaId: "tools",
-    questionId: "tools",
-    optionIds: ["microsoft"],
-    text: "Put the first helper in the Microsoft tools your team already opens.",
-  },
-  {
-    id: "tools-industry",
-    areaId: "tools",
-    questionId: "tools",
-    optionIds: ["industry"],
-    text: "Keep using the industry software you already run, and stop retyping what it already knows.",
-  },
-  {
-    id: "tools-other",
-    areaId: "tools",
-    questionId: "tools",
-    optionIds: ["other-software"],
-    text: "Connect the other software you use so info is entered once.",
+    optionIds: [],
+    text: "Connect the tools you already use so info is entered once.",
   },
   {
     id: "ai-not-yet",
@@ -958,8 +979,16 @@ export function auditSurvey(): string[] {
     for (const suggestion of suggestions) {
       if (!areaIds.has(suggestion.areaId)) problems.push(`${suggestion.id} points at an unknown area`);
       const question = questions.find((item) => item.id === suggestion.questionId);
-      if (!question?.options) {
+      if (!question) {
         problems.push(`${suggestion.id} points at an unknown question`);
+        continue;
+      }
+      if (suggestion.optionIds.length === 0) {
+        if (question.kind !== "tools") problems.push(`${suggestion.id} matches nothing`);
+        continue;
+      }
+      if (!question.options) {
+        problems.push(`${suggestion.id} points at a question without choices`);
         continue;
       }
       for (const optionId of suggestion.optionIds) {
@@ -978,6 +1007,19 @@ export function auditSurvey(): string[] {
       }
     }
   }
+  const seen = new Set<string>();
+  for (const tool of knownTools) {
+    const key = tool.name.toLowerCase();
+    if (seen.has(key)) problems.push(`duplicate tool ${tool.name}`);
+    seen.add(key);
+  }
+  if (popularTools.length !== 6) problems.push(`expected 6 popular tools, found ${popularTools.length}`);
+  for (const name of popularTools) {
+    if (!knownTools.some((tool) => tool.name === name)) problems.push(`popular tool ${name} is not in the known list`);
+  }
+  const toolsQuestion = businessQuestions.find((question) => question.id === "tools");
+  if (toolsQuestion?.kind !== "tools") problems.push("tools question should be the searchable picker");
+  if (toolsQuestion?.options) problems.push("tools question should not use a checkbox list");
   return problems;
 }
 
@@ -1015,19 +1057,34 @@ function timeScore(hours: string | null, taskCount: number): AreaScore {
 }
 
 /**
- * Named systems are the stronger spot: accounting, Google, Microsoft, a CRM,
- * industry-specific software, and other software. Spreadsheets or paper
- * beside them is Getting there. Spreadsheets and/or paper alone is Room to grow.
+ * Mostly spreadsheets and Mostly paper are the loose spot. Anything else,
+ * including a custom tool, is a named system. Loose tools alone are Room to
+ * grow. A mix is Getting there. Named systems alone are Strong.
  */
 function toolsScore(selected: string[]): AreaScore {
   if (selected.length === 0) return 1;
-  const named = ["quickbooks", "google", "microsoft", "crm", "industry", "other-software"];
-  const loose = ["spreadsheets", "paper"];
-  const hasNamed = selected.some((id) => named.includes(id));
-  const hasLoose = selected.some((id) => loose.includes(id));
+  const hasLoose = selected.some((name) => findKnownTool(name)?.category === "basic");
+  const hasNamed = selected.some((name) => findKnownTool(name)?.category !== "basic");
   if (hasNamed && !hasLoose) return 3;
   if (hasNamed && hasLoose) return 2;
   return 1;
+}
+
+/** Custom names first, then industry tools, then other named systems, then paper or spreadsheets. */
+function namesForToolsSuggestion(selected: string[]): string[] {
+  return selected
+    .map((name, index) => ({ name, index, rank: toolSuggestionRank(name) }))
+    .sort((a, b) => a.rank - b.rank || a.index - b.index)
+    .slice(0, 2)
+    .map((item) => item.name);
+}
+
+function toolSuggestionRank(name: string): number {
+  const category = findKnownTool(name)?.category;
+  if (!category) return 0;
+  if (category === "industry") return 1;
+  if (category === "basic") return 3;
+  return 2;
 }
 
 /** 1 worry → Strong, 2 → Getting there, 3 or more → Room to grow. */
@@ -1132,27 +1189,12 @@ function needsANextStep(area: ScoredArea): boolean {
   return area.kind === "opportunity" ? area.score >= 2 : area.score <= 2;
 }
 
-/** When they named software, lead with that sentence and use their words as typed. */
-function preferTypedTools(source: SuggestionDef[], area: ScoredArea, answers: SurveyAnswers): SuggestionDef[] {
-  if (area.id !== "tools" || !typedOther(answers, "tools")) return source;
-  if (!selectedMulti(answers, "tools").includes("other-software")) return source;
-  const named = source.find((item) => item.id === "tools-other");
-  if (!named) return source;
-  return [named, ...source.filter((item) => item.id !== "tools-other")];
-}
-
 function suggestionText(item: SuggestionDef, answers: SurveyAnswers): string {
-  if (item.id !== "tools-other") return item.text;
-  const names = typedOther(answers, "tools");
-  if (!names) return item.text;
-  return `Connect ${names} and the rest of your tools so info is entered once.`;
-}
-
-function typedOther(answers: SurveyAnswers, questionId: string): string | null {
-  const value = answers[otherAnswerKey(questionId)];
-  if (typeof value !== "string") return null;
-  const text = value.trim();
-  return text.length > 0 ? text : null;
+  if (item.id !== "tools-connect") return item.text;
+  const names = namesForToolsSuggestion(selectedMulti(answers, "tools"));
+  if (names.length >= 2) return `Connect ${names[0]} and ${names[1]} so info is entered once.`;
+  if (names.length === 1) return `Connect ${names[0]} so info is entered once.`;
+  return item.text;
 }
 
 function pickSuggestions(path: SurveyPath, answers: SurveyAnswers, areas: ScoredArea[]): ChosenSuggestion[] {
@@ -1165,9 +1207,13 @@ function pickSuggestions(path: SurveyPath, answers: SurveyAnswers, areas: Scored
   const take = (areaList: ScoredArea[], source: SuggestionDef[], perArea: number) => {
     for (const area of areaList) {
       let count = 0;
-      for (const item of preferTypedTools(source, area, answers)) {
+      for (const item of source) {
         if (item.areaId !== area.id || used.has(item.id)) continue;
-        if (!answerMatches(answers, item.questionId, item.optionIds)) continue;
+        const matched =
+          item.id === "tools-connect"
+            ? selectedMulti(answers, "tools").length > 0
+            : answerMatches(answers, item.questionId, item.optionIds);
+        if (!matched) continue;
         chosen.push({ id: item.id, areaId: area.id, areaLabel: area.label, text: suggestionText(item, answers) });
         used.add(item.id);
         count += 1;
