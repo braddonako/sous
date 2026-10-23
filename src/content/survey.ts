@@ -29,14 +29,29 @@ export type SurveyPath = "business" | "teams";
 
 export type AreaScore = 1 | 2 | 3;
 
-/** Question id → option id, list of option ids, or free text. */
+/**
+ * Question id → option id, list of option ids, or free text.
+ * A short note beside an Other choice is stored at `${questionId}_other`.
+ */
 export type SurveyAnswers = Record<string, string | string[]>;
+
+export const OTHER_TEXT_MAX = 80;
+
+/** Answer key for the optional text next to an Other choice. */
+export function otherAnswerKey(questionId: string): string {
+  return `${questionId}_other`;
+}
 
 export type QuestionKind = "single" | "multi" | "text";
 
 export type SurveyOption = {
   id: string;
   label: string;
+  /** Shown under this choice when it is selected. The note is optional. */
+  detail?: {
+    label: string;
+    placeholder?: string;
+  };
 };
 
 export type SurveyQuestion = {
@@ -230,7 +245,11 @@ const businessQuestions: SurveyQuestion[] = [
       { id: "trades", label: "Trades & home services" },
       { id: "retail", label: "Retail" },
       { id: "healthcare", label: "Healthcare" },
-      { id: "other", label: "Other" },
+      {
+        id: "other",
+        label: "Other",
+        detail: { label: "What kind of business?", placeholder: "Financial advisory, insurance…" },
+      },
     ],
   },
   {
@@ -255,6 +274,7 @@ const businessQuestions: SurveyQuestion[] = [
       { id: "chasing", label: "Chasing people for documents or replies" },
       { id: "reports", label: "Building reports" },
       { id: "questions", label: "Answering the same questions over and over" },
+      { id: "other", label: "Something else", detail: { label: "The other task" } },
     ],
   },
   {
@@ -277,6 +297,12 @@ const businessQuestions: SurveyQuestion[] = [
       { id: "google", label: "Google Workspace" },
       { id: "microsoft", label: "Microsoft 365" },
       { id: "crm", label: "A CRM" },
+      { id: "industry", label: "Industry-specific software" },
+      {
+        id: "other-software",
+        label: "Other software",
+        detail: { label: "Which software?", placeholder: "e.g. eMoney, Redtail, Salesforce" },
+      },
       { id: "spreadsheets", label: "Mostly spreadsheets" },
       { id: "paper", label: "Mostly paper" },
     ],
@@ -330,6 +356,7 @@ const teamsQuestions: SurveyQuestion[] = [
       { id: "mobile", label: "Mobile apps" },
       { id: "backend", label: "Backend and APIs" },
       { id: "internal", label: "Internal tools" },
+      { id: "other", label: "Something else", detail: { label: "What else you build" } },
     ],
   },
   {
@@ -353,6 +380,7 @@ const teamsQuestions: SurveyQuestion[] = [
       { id: "design", label: "Design handoff" },
       { id: "unclear", label: "Unclear tickets" },
       { id: "deploys", label: "Deploys" },
+      { id: "other", label: "Somewhere else", detail: { label: "The other place work waits" } },
     ],
   },
   {
@@ -437,6 +465,13 @@ const businessSuggestions: SuggestionDef[] = [
     text: "Save the answers you repeat every week, so the team can use them without asking you.",
   },
   {
+    id: "time-other",
+    areaId: "time",
+    questionId: "tasks",
+    optionIds: ["other"],
+    text: "Start with the task that didn't fit the list.",
+  },
+  {
     id: "time-under-5",
     areaId: "time",
     questionId: "hours",
@@ -505,6 +540,20 @@ const businessSuggestions: SuggestionDef[] = [
     questionId: "tools",
     optionIds: ["microsoft"],
     text: "Put the first helper in the Microsoft tools your team already opens.",
+  },
+  {
+    id: "tools-industry",
+    areaId: "tools",
+    questionId: "tools",
+    optionIds: ["industry"],
+    text: "Keep using the industry software you already run, and stop retyping what it already knows.",
+  },
+  {
+    id: "tools-other",
+    areaId: "tools",
+    questionId: "tools",
+    optionIds: ["other-software"],
+    text: "Connect the other software you use so info is entered once.",
   },
   {
     id: "ai-not-yet",
@@ -687,6 +736,13 @@ const teamsSuggestions: SuggestionDef[] = [
     text: "Make shipping a small, regular step instead of a wait at the end.",
   },
   {
+    id: "flow-other",
+    areaId: "flow",
+    questionId: "waits",
+    optionIds: ["other"],
+    text: "Clear the extra place work sits, the one that didn't fit the list.",
+  },
+  {
     id: "ai-none",
     areaId: "ai",
     questionId: "ai",
@@ -820,6 +876,14 @@ const teamsSuggestions: SuggestionDef[] = [
     filler: true,
     text: "Try the first change on an internal tool, where a miss is easier to catch.",
   },
+  {
+    id: "builds-other",
+    areaId: "delivery",
+    questionId: "builds",
+    optionIds: ["other"],
+    filler: true,
+    text: "Try the first change on the kind of work that didn't fit the list.",
+  },
 ];
 
 const fallbackSuggestions = {
@@ -932,6 +996,7 @@ function scoreAreas(path: SurveyPath, answers: SurveyAnswers): ScoredArea[] {
 /**
  * Time to win back. More hours and more tasks mean a bigger opportunity.
  * A missing answer stays at Some, so a blank doesn't inflate the bar.
+ * "Something else" counts as one task.
  *
  * | Hours   | 1 task        | 2–3 tasks     | 4+ tasks      |
  * | Under 5 | Some          | Some          | A good amount |
@@ -950,12 +1015,13 @@ function timeScore(hours: string | null, taskCount: number): AreaScore {
 }
 
 /**
- * Named systems are the stronger spot. Spreadsheets or paper beside them
- * is Getting there. Spreadsheets and/or paper alone is Room to grow.
+ * Named systems are the stronger spot: accounting, Google, Microsoft, a CRM,
+ * industry-specific software, and other software. Spreadsheets or paper
+ * beside them is Getting there. Spreadsheets and/or paper alone is Room to grow.
  */
 function toolsScore(selected: string[]): AreaScore {
   if (selected.length === 0) return 1;
-  const named = ["quickbooks", "google", "microsoft", "crm"];
+  const named = ["quickbooks", "google", "microsoft", "crm", "industry", "other-software"];
   const loose = ["spreadsheets", "paper"];
   const hasNamed = selected.some((id) => named.includes(id));
   const hasLoose = selected.some((id) => loose.includes(id));
@@ -986,7 +1052,8 @@ function businessAreaScore(id: string, answers: SurveyAnswers): AreaScore {
  * Delivery: Days → Strong, 1–2 weeks and 3–4 weeks → Getting there,
  * Over a month → Room to grow.
  *
- * Flow: 1 place → Strong, 2–3 → Getting there, 4–5 → Room to grow.
+ * Flow: 1 place → Strong, 2–3 → Getting there, 4 or more → Room to grow.
+ * "Somewhere else" counts as one place.
  *
  * AI: Not at all → Room to grow, chat or autocomplete → Getting there,
  * AI writes code and opens pull requests → Strong.
@@ -1065,6 +1132,29 @@ function needsANextStep(area: ScoredArea): boolean {
   return area.kind === "opportunity" ? area.score >= 2 : area.score <= 2;
 }
 
+/** When they named software, lead with that sentence and use their words as typed. */
+function preferTypedTools(source: SuggestionDef[], area: ScoredArea, answers: SurveyAnswers): SuggestionDef[] {
+  if (area.id !== "tools" || !typedOther(answers, "tools")) return source;
+  if (!selectedMulti(answers, "tools").includes("other-software")) return source;
+  const named = source.find((item) => item.id === "tools-other");
+  if (!named) return source;
+  return [named, ...source.filter((item) => item.id !== "tools-other")];
+}
+
+function suggestionText(item: SuggestionDef, answers: SurveyAnswers): string {
+  if (item.id !== "tools-other") return item.text;
+  const names = typedOther(answers, "tools");
+  if (!names) return item.text;
+  return `Connect ${names} and the rest of your tools so info is entered once.`;
+}
+
+function typedOther(answers: SurveyAnswers, questionId: string): string | null {
+  const value = answers[otherAnswerKey(questionId)];
+  if (typeof value !== "string") return null;
+  const text = value.trim();
+  return text.length > 0 ? text : null;
+}
+
 function pickSuggestions(path: SurveyPath, answers: SurveyAnswers, areas: ScoredArea[]): ChosenSuggestion[] {
   const catalog = suggestionsFor(path);
   const primary = catalog.filter((item) => !item.filler);
@@ -1075,10 +1165,10 @@ function pickSuggestions(path: SurveyPath, answers: SurveyAnswers, areas: Scored
   const take = (areaList: ScoredArea[], source: SuggestionDef[], perArea: number) => {
     for (const area of areaList) {
       let count = 0;
-      for (const item of source) {
+      for (const item of preferTypedTools(source, area, answers)) {
         if (item.areaId !== area.id || used.has(item.id)) continue;
         if (!answerMatches(answers, item.questionId, item.optionIds)) continue;
-        chosen.push({ id: item.id, areaId: area.id, areaLabel: area.label, text: item.text });
+        chosen.push({ id: item.id, areaId: area.id, areaLabel: area.label, text: suggestionText(item, answers) });
         used.add(item.id);
         count += 1;
         if (count >= perArea || chosen.length >= 3) break;

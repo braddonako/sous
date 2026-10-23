@@ -688,6 +688,31 @@ summary::-webkit-details-marker {
   box-shadow: inset 4px 0 0 var(--sage-deep);
 }
 
+.survey-other {
+  margin-top: 8px;
+  margin-left: 18px;
+  padding-left: 14px;
+  border-left: 2px solid var(--sage-deep);
+}
+
+.survey-other-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.survey-other-input {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  padding: 10px 14px;
+  color: var(--ink);
+  font: inherit;
+}
+
 .survey-text {
   width: 100%;
   min-height: 140px;
