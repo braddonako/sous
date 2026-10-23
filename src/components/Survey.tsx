@@ -19,6 +19,7 @@ import {
 } from "@/content/survey";
 import { onSurveyComplete } from "@/lib/survey-submit";
 import { BookCall } from "@/components/BookCall";
+import { ToolPicker } from "@/components/ToolPicker";
 import { ArrowRightIcon, StorefrontIcon, TerminalIcon } from "@/components/icons";
 
 type Step = "choose" | "result" | number;
@@ -243,6 +244,12 @@ function QuestionStep({
           rows={5}
           autoComplete="off"
         />
+      ) : question.kind === "tools" ? (
+        <ToolPicker
+          describedBy="survey-hint"
+          selected={selectedList(answers, question.id)}
+          onChange={(tools) => onAnswers({ ...answers, [question.id]: tools })}
+        />
       ) : (
         <fieldset className="survey-fieldset mt-6" aria-describedby="survey-hint">
           <legend className="sr-only">{question.prompt}</legend>
@@ -395,6 +402,12 @@ function SuggestionList({ result }: { result: SurveyResult }) {
       ))}
     </ul>
   );
+}
+
+function selectedList(answers: SurveyAnswers, questionId: string): string[] {
+  const value = answers[questionId];
+  if (!Array.isArray(value)) return [];
+  return value.filter((item): item is string => typeof item === "string" && item.length > 0);
 }
 
 function isAnswered(question: SurveyQuestion, answers: SurveyAnswers): boolean {
